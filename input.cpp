@@ -91,7 +91,7 @@ void getPoints(struct Input &in) {
 
 Eigen::VectorXd point(double space, double dim) {
     std::vector<double> vec;
-    while (!isValid(space, dim, vec)) {
+    while (!validVector(space, dim, vec)) {
         vec.clear();
     }
 

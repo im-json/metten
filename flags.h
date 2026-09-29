@@ -10,9 +10,9 @@
 #include <cstdlib>
 #include <cmath>
 
-bool isValid(double space, double dim, std::vector<double> &vec);
+bool validVector(double space, double dim, std::vector<double> &vec);
 
-bool isExpression(std::string &elem, std::vector<double> &vec);
+bool validElement(std::string &elem, std::vector<double> &vec);
 
 bool isDouble(std::string elem);
 

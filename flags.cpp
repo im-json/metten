@@ -3,7 +3,7 @@
 constexpr double PI = 3.141592653589793;
 constexpr double E = 2.718281828459045;
 
-bool isValid(double space, double dim, std::vector<double> &vec) {
+bool validVector(double space, double dim, std::vector<double> &vec) {
     std::string str, elem;
 
     std::getline(std::cin >> std::ws, str);
@@ -11,7 +11,7 @@ bool isValid(double space, double dim, std::vector<double> &vec) {
     std::stringstream stream(str);
 
     while (std::getline(stream, elem, ',')) {
-        if (!isExpression(elem, vec)) {
+        if (!validElement(elem, vec)) {
             std::cout << "Invalid vector, dumbass. Try again:\n";
             return false;
         }
@@ -32,7 +32,7 @@ bool isValid(double space, double dim, std::vector<double> &vec) {
     return true;
 }
 
-bool isExpression(std::string &elem, std::vector<double> &vec) {
+bool validElement(std::string &elem, std::vector<double> &vec) {
     bool hasPi = false;
     
     if (!isDouble(elem) && inRadians(elem)) {
