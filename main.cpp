@@ -1,7 +1,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 
-#include "flags.h"
+#include "checks.h"
 #include "input.h"
 #include "metric.h"
 #include "distance.h"

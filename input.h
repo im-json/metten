@@ -3,7 +3,7 @@
 #include <iostream>
 #include <Eigen/Dense>
 
-#include "flags.h"
+#include "checks.h"
 
 struct Input {
     double space;

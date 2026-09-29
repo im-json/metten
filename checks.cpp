@@ -1,4 +1,4 @@
-#include "flags.h"
+#include "checks.h"
 
 constexpr double PI = 3.141592653589793;
 constexpr double E = 2.718281828459045;
