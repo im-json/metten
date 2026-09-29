@@ -10,7 +10,7 @@ double distance(struct Input in);
 
 Eigen::VectorXd CylinderToCart(Eigen::VectorXd vec);
 
-Eigen::VectorXd SphereToCart(Eigen::VectorXd vec);
+Eigen::VectorXd BallToCart(Eigen::VectorXd vec);
 
 double euclidean(struct Input in);
 

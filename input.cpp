@@ -10,10 +10,17 @@ struct Input setup() {
         std::cout << "Select a region:\n";
         std::cout << "Type 1 for Cartesian (solid, in R^n)\n";
         std::cout << "Type 2 for Polar (solid, in R^2)\n";
+        // std::cout << "Type 2.2 for 2-cylinder (hollow)\n";
+        // std::cout << "Type 2.3 for 2-sphere (hollow, S^2)\n";
+        // std::cout << "Type 2.4 for 2-torus (hollow, T^2)\n";
+        // std::cout << "Type 2.5 for 2-cone (hollow)\n";
         std::cout << "Type 3.1 for Cylinder (solid, in R^3)\n";
-        std::cout << "Type 3.2 for Sphere (solid, in R^3)\n";
+        std::cout << "Type 3.2 for Ball (solid, in R^3)\n";
+        // std::cout << "Type 3.3 for Torus (solid, in R^3)\n";
+        // std::cout << "Type 3.4 for Cone (solid, in R^3)\n";
+        // std::cout << "Type 3.5 for n-sphere (hollow, S^n)\n";
         std::cout << "Type 4.1 for Hypercylinder (solid, in R^n)\n";
-        std::cout << "Type 4.2 for Hypersphere (solid, in R^n)\n";
+        std::cout << "Type 4.2 for Hyperball (solid, in R^n)\n";
         std::cin >> in.space;
 
         if (in.space < 1.0 || in.space > 4.2) {

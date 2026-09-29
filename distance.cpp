@@ -25,7 +25,7 @@ Eigen::VectorXd CylinderToCart(Eigen::VectorXd vec) {
     return cartComponent;
 }
 
-Eigen::VectorXd SphereToCart(Eigen::VectorXd vec) {
+Eigen::VectorXd BallToCart(Eigen::VectorXd vec) {
     Eigen::VectorXd cartComponent = vec;
     double r = vec(0);
     double prodSin = 1;
@@ -52,8 +52,8 @@ double euclidean(struct Input in) {
         Eigen::VectorXd p2CartComponent = CylinderToCart(in.p2);
         return (p2CartComponent - p1CartComponent).norm();
     } else if (in.space == 3.2 || in.space == 4.2) {
-        Eigen::VectorXd p1CartComponent = SphereToCart(in.p1);
-        Eigen::VectorXd p2CartComponent = SphereToCart(in.p2);
+        Eigen::VectorXd p1CartComponent = BallToCart(in.p1);
+        Eigen::VectorXd p2CartComponent = BallToCart(in.p2);
         return (p2CartComponent - p1CartComponent).norm();
     }
 

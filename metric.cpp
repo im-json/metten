@@ -8,11 +8,11 @@ Eigen::MatrixXd metric(double space, Eigen::VectorXd vec) {
     } else if (space == 3.1) {
         return cylinder(vec);
     } else if (space == 3.2) {
-        return sphere(vec);
+        return ball(vec);
     } else if (space == 4.1) {
         return hypercylinder(vec);
     } else if (space == 4.2) {
-        return hypersphere(vec);
+        return hyperball(vec);
     }
 
     return Eigen::MatrixXd();
@@ -55,7 +55,7 @@ Eigen::Matrix3d cylinder(Eigen::Vector3d vec) {
     return mat;
 }
 
-Eigen::Matrix3d sphere(Eigen::Vector3d vec) {
+Eigen::Matrix3d ball(Eigen::Vector3d vec) {
     if (vec.size() != 3) {
         std::cout << "Dimension != 3, dumbass" << std::endl;
         return Eigen::Matrix3d();
@@ -91,7 +91,7 @@ Eigen::MatrixXd hypercylinder(Eigen::VectorXd vec) {
     return mat;
 }
 
-Eigen::MatrixXd hypersphere(Eigen::VectorXd vec) {
+Eigen::MatrixXd hyperball(Eigen::VectorXd vec) {
     int d = vec.size();
 
     if (d < 4) {

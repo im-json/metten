@@ -14,10 +14,10 @@ Eigen::Matrix2d polar(Eigen::Vector2d vec);
 
 Eigen::Matrix3d cylinder(Eigen::Vector3d vec);
 
-Eigen::Matrix3d sphere(Eigen::Vector3d vec);
+Eigen::Matrix3d ball(Eigen::Vector3d vec);
 
 Eigen::MatrixXd hypercylinder(Eigen::VectorXd vec);
 
-Eigen::MatrixXd hypersphere(Eigen::VectorXd vec);
+Eigen::MatrixXd hyperball(Eigen::VectorXd vec);
 
 double polyPath(struct Input in);
