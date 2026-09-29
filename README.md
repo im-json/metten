@@ -7,14 +7,18 @@ metten (named after **met**ric **ten**sor) is a geometric one-trick pony. Its si
 * Polar in $\mathbb{R}^2 \quad (r,\theta)$
 * Cylinder (solid) in $\mathbb{R}^3 \quad (r,\theta,z)$
 * Ball (solid) in $\mathbb{R}^3 \quad (r,\phi,\theta)$
+* Torus (solid) in $\mathbb{R}^3 \quad (s,\phi,\theta)$
 * Hypercylinder (solid) in $\mathbb{R}^n, \ n \ge 4 \quad (r,\phi_1,\dots,\theta,z)$
 * Hyperball (solid) in $\mathbb{R}^n, \ n \ge 4 \quad (r,\phi_1,\dots,\theta)$
+* Torus (solid) in $\mathbb{R}^n \quad (s,\phi_1,\dots,\theta)$
 
 Flat manifolds are relatively simple cases. Euclidean space has zero Riemann curvature, and analytic solutions for shortest distance always exist.
 Distance between two points is the $\ell^2$ norm of the difference between the Cartesian components of both points.
 
 ### Positive Curvature Manifolds
-* 2-sphere $S^2$ (hollow) $\quad (\phi,\theta)$
-* n-sphere $S^n$ (hollow) $\quad (\phi_1,\dots,\theta)$
+* 2-sphere $\mathbb{S}^2$ (hollow) $\quad (\phi,\theta)$
+* 2-torus $\mathbb{T}^n$ (hollow) $\quad (\phi,\theta)$
+* n-sphere $\mathbb{S}^n$ (hollow) $\quad (\phi_1,\dots,\theta)$
+* n-torus $\mathbb{T}^n$ (hollow) $\quad (\phi_1,\dots,\theta)$
 
 ### Negative Curvature Manifolds
