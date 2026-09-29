@@ -14,6 +14,7 @@ Flat manifolds are relatively simple cases. Euclidean space has zero Riemann cur
 Distance between two points is the $\ell^2$ norm of the difference between the Cartesian components of both points.
 
 ### Positive Curvature Manifolds
-* Intrinsic spheres in $\mathbb{S}^n \quad (\phi,\theta)$ 
+* 2-sphere $S^2$ (hollow) $\quad (\phi,\theta)$
+* n-sphere $S^n$ (hollow) $\quad (\phi_1,\dots,\theta)$
 
 ### Negative Curvature Manifolds
