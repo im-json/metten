@@ -6,12 +6,15 @@
 #include "flags.h"
 
 struct Input {
-    int space;
-    int dim;
+    double space;
+    double dim;
+    int riemCurveSign;
     Eigen::VectorXd p1;
     Eigen::VectorXd p2;
 };
 
 struct Input setup();
 
-Eigen::VectorXd point(int space, int dim);
+void getPoints(struct Input &in);
+
+Eigen::VectorXd point(double space, double dim);

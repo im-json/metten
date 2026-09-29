@@ -4,14 +4,14 @@
 #include "flags.h"
 #include "input.h"
 #include "metric.h"
-#include "path.h"
+#include "distance.h"
 
 int main() {
     struct Input in = setup();
 
-    double len = polypath(in);
+    double exact = distance(in);
 
-    std::cout << "Length is: " << len << std::endl;
+    std::cout << "Exact distance: " << exact << std::endl;
 
     return 0;
 }

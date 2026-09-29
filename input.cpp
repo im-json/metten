@@ -3,49 +3,93 @@
 struct Input setup() {
     struct Input in;
 
-    std::cout << "Select a coordinate system:\n";
-    std::cout << "Type 1 for Cartesian\nType 2 for Polar\nType 3 for Spherical\n";
-    std::cin >> in.space;
+    in.space = 0.0;
+    in.dim = 0.0;
 
-    while (in.space < 1 || in.space > 3) {
-        std::cout << "Enter a valid capital letter, dumbass. ";
+    while (in.space < 1.0 || in.space > 4.2) {
         std::cout << "Select a coordinate system:\n";
-        std::cout << "Type 1 for Cartesian\nType 2 for Polar\nType 3 for Spherical\n";
+        std::cout << "Type 1 for Cartesian\n";
+        std::cout << "Type 2 for Polar\n";
+        std::cout << "Type 3.1 for Cylindrical, 3.2 for Spherical\n";
+        std::cout << "Type 4.1 for Hypercylindrical, 4.2 for Hyperspherical\n";
         std::cin >> in.space;
+
+        if (in.space < 1.0 || in.space > 4.2) {
+            std::cout << "Enter a valid number, dumbass.\n";
+        }
     }
 
-    if (in.space != 2) {
-        std::cout << "Enter dimension:\n";
-        std::cin >> in.dim;
-    } else if (in.space == 2) {
-        in.dim = 2;
+    double minDim = std::floor(in.space);
+
+    if (in.space == 4.1 || in.space == 4.2) {
+        while (in.dim < minDim || !isInteger(in.dim)) {
+            std::cout << "Enter dimension:\n";
+            std::cin >> in.dim;
+
+            if (in.dim < minDim || !isInteger(in.dim)) {
+                std::cout << "Enter an integer >= " << minDim << ", dumbass.\n";
+            }
+        }
+    } else {
+        in.dim = std::floor(minDim);
     }
 
-    if (in.space == 1) {
-        std::cout << "Enter point 1 in the form x1,...,xn:\n";
-        in.p1 = point(in.space, in.dim);
-        std::cout << "Enter point 2 in the form x1,...,xn:\n";
-        in.p2 = point(in.space, in.dim);
-    } else if (in.space == 2) {
-        std::cout << "Enter point 1 in the form r,phi. ";
-        std::cout << "Use radians for phi (e.g. 2*PI):\n";
-        in.p1 = point(in.space, 2);
-        std::cout << "Enter point 2 in the form r,phi. ";
-        std::cout << "Use radians for phi (e.g. 2*PI):\n";
-        in.p2 = point(in.space, 2);
-    } else if (in.space == 3) {
-        std::cout << "Enter point 1 in the form r,theta1,...,phi. ";
-        std::cout << "Use radians for thetas and phi (e.g. 2.5PI):\n";
-        in.p1 = point(in.space, in.dim);
-        std::cout << "Enter point 2 in the form r,theta1,...,phi:\n";
-        std::cout << "Use radians for thetas and phi (e.g. 2.5PI):\n";
-        in.p2 = point(in.space, in.dim);
-    }
+    getPoints(in);
 
     return in;
 }
 
-Eigen::VectorXd point(int space, int dim) {
+void getPoints(struct Input &in) {
+    if (in.space == 1.0) {
+        in.riemCurveSign = 0;
+        std::cout << "Enter point 1 in the form x1,...,xn:\n";
+        in.p1 = point(in.space, in.dim);
+        std::cout << "Enter point 2 in the form x1,...,xn:\n";
+        in.p2 = point(in.space, in.dim);
+    } else if (in.space == 2.0) {
+        in.riemCurveSign = 0;
+        std::cout << "Enter point 1 in the form r,theta. ";
+        std::cout << "Use radians for theta (e.g. 2*PI):\n";
+        in.p1 = point(in.space, 2);
+        std::cout << "Enter point 2 in the form r,theta. ";
+        std::cout << "Use radians for theta (e.g. 2*PI):\n";
+        in.p2 = point(in.space, 2);
+    } else if (in.space == 3.1) {
+        in.riemCurveSign = 0;
+        std::cout << "Enter point 1 in the form r,theta,z. ";
+        std::cout << "Use radians for theta (e.g. 2*PI):\n";
+        in.p1 = point(in.space, 3);
+        std::cout << "Enter point 2 in the form r,theta,z. ";
+        std::cout << "Use radians for theta (e.g. 2*PI):\n";
+        in.p2 = point(in.space, 3);
+    } else if (in.space == 3.2) {
+        in.riemCurveSign = 0;
+        std::cout << "Enter point 1 in the form r,phi,theta. ";
+        std::cout << "Use radians for phi and theta (e.g. 2*PI):\n";
+        in.p1 = point(in.space, 3);
+        std::cout << "Enter point 2 in the form r,phi,theta. ";
+        std::cout << "Use radians for phi and theta (e.g. 2*PI):\n";
+        in.p2 = point(in.space, 3);
+    } else if (in.space == 4.1) {
+        in.riemCurveSign = 0;
+        std::cout << "Enter point 1 in the form r,phi1,...,theta,z. ";
+        std::cout << "Use radians for phis and theta (e.g. 2PI):\n";
+        in.p1 = point(in.space, in.dim);
+        std::cout << "Enter point 2 in the form r,phi1,...,theta,z. ";
+        std::cout << "Use radians for phis and theta (e.g. 2PI):\n";
+        in.p2 = point(in.space, in.dim);
+    } else if (in.space == 4.2) {
+        in.riemCurveSign = 0;
+        std::cout << "Enter point 1 in the form r,phi1,...,theta. ";
+        std::cout << "Use radians for phis and theta (e.g. 2PI):\n";
+        in.p1 = point(in.space, in.dim);
+        std::cout << "Enter point 2 in the form r,phi1,...,theta. ";
+        std::cout << "Use radians for phis and theta (e.g. 2PI):\n";
+        in.p2 = point(in.space, in.dim);
+    }
+}
+
+Eigen::VectorXd point(double space, double dim) {
     std::vector<double> vec;
     while (!isValid(space, dim, vec)) {
         vec.clear();

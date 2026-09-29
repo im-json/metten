@@ -3,7 +3,7 @@
 constexpr double PI = 3.141592653589793;
 constexpr double E = 2.718281828459045;
 
-bool isValid(int space, int dim, std::vector<double> &vec) {
+bool isValid(double space, double dim, std::vector<double> &vec) {
     std::string str, elem;
 
     std::getline(std::cin >> std::ws, str);
@@ -11,11 +11,10 @@ bool isValid(int space, int dim, std::vector<double> &vec) {
     std::stringstream stream(str);
 
     while (std::getline(stream, elem, ',')) {
-        if (!isExpression(elem)) {
+        if (!isExpression(elem, vec)) {
             std::cout << "Invalid vector, dumbass. Try again:\n";
             return false;
         }
-        vec.push_back(std::stod(elem));
     }
 
     if (vec.size() < dim) {
@@ -27,32 +26,36 @@ bool isValid(int space, int dim, std::vector<double> &vec) {
     }
 
     if (!inDomain(space, dim, vec)) {
-        std::cout << "Vector not in the domain space, dumbass. Try again:\n";
         return false;
     }
 
     return true;
 }
 
-bool isExpression(std::string &elem) {
-    if (!isDouble(elem)) {
-        if (inRadians(elem)) {
-            eraseSubstring(elem, "pi");
-            eraseSubstring(elem, "PI");
-            eraseSubstring(elem, "Pi");
-            eraseSubstring(elem, "pI");
-            eraseSubstring(elem, "*");
+bool isExpression(std::string &elem, std::vector<double> &vec) {
+    bool hasPi = false;
+    
+    if (!isDouble(elem) && inRadians(elem)) {
+        eraseSubstring(elem, "pi");
+        eraseSubstring(elem, "PI");
+        eraseSubstring(elem, "Pi");
+        eraseSubstring(elem, "pI");
+        eraseSubstring(elem, "*");
 
-            if (!elem.empty()) {
-                elem = std::to_string(std::stod(elem)*PI);
-            } else {
-                elem = std::to_string(PI);
-            }
+        hasPi = true;
+    }
+
+    if (hasPi) {
+        if (!elem.empty()) {
+            vec.push_back(std::stod(elem)*PI);
+        } else {
+            vec.push_back(PI);
         }
-
+    } else {
         if (!isDouble(elem)) {
             return false;
         }
+        vec.push_back(std::stod(elem));
     }
 
     return true;
@@ -110,33 +113,74 @@ bool inRadians(std::string elem) {
     }
 }
 
-bool inDomain(int space, int dim, std::vector<double> vec) {
-    if (space == 2) {
-        if (vec[0] < 0) {
-            std::cout << "r must be non-negative, dumbass" << std::endl;
+bool inDomain(double space, double dim, std::vector<double> vec) {
+    if (space == 2.0) {
+        if (!validRadius(vec[0]) | !validAzimuth(vec[1])) {
             return false;
         }
-        if (vec[1] < 0 || vec[1] >= 2*PI) {
-            std::cout << "phi is not in [0, 2*PI), dumbass" << std::endl;
+    } else if (space == 3.1) {
+        if (!validRadius(vec[0]) | !validAzimuth(vec[1])) {
             return false;
         }
-    } else if (space == 3) {
-        if (vec[0] < 0) {
-            std::cout << "r must be non-negative, dumbass" << std::endl;
+    } else if (space == 3.2) {
+        if (!validRadius(vec[0]) | !validZenith(vec[1], 0) | !validAzimuth(vec[2])) {
+            return false;
+        }
+    } else if (space == 4.1) {
+        if (!validRadius(vec[0]) | !validAzimuth(vec[dim - 2])) {
+            return false;
+        }
+
+        for (int i = 1; i < dim - 2; i++) {
+            if (!validZenith(vec[i], i)) {
+                return false;
+            }
+        }
+    } else if (space == 4.2) {
+        if (!validRadius(vec[0]) | !validAzimuth(vec[dim - 1])) {
             return false;
         }
 
         for (int i = 1; i < dim - 1; i++) {
-            if (vec[i] < 0 || vec[i] > PI) {
-                std::cout << "theta" << i << " is not in [0, PI], dumbass" << std::endl;
+            if (!validZenith(vec[i], i)) {
                 return false;
             }
         }
+    }
 
-        if (vec[dim - 1] < 0 || vec[dim - 1] >= 2*PI) {
-            std::cout << "phi is not in [0, 2*PI), dumbass" << std::endl;
-            return false;
+    return true;
+}
+
+bool isInteger(double a) {
+    return (std::floor(a) == a);
+}
+
+bool validRadius(double r) {
+    if (r < 0) {
+        std::cout << "r must be non-negative, dumbass. Try again:\n";
+        return false;
+    }
+
+    return true;
+}
+
+bool validZenith(double phi, int i) {
+    if (phi < 0 || phi > PI) {
+        if (!i) {
+            std::cout << "phi is not in [0, PI], dumbass. Try again:\n";
+        } else {
+            std::cout << "phi" << i << " is not in [0, PI], dumbass. Try again:\n";
         }
+        return false;
+    }
+
+    return true;
+}
+
+bool validAzimuth(double theta) {
+    if (theta < 0 || theta >= 2*PI) {
+        std::cout << "theta is not in [0, 2*PI), dumbass. Try again:\n";
+        return false;
     }
 
     return true;

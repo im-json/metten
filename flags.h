@@ -8,10 +8,11 @@
 #include <algorithm>
 #include <stdexcept>
 #include <cstdlib>
+#include <cmath>
 
-bool isValid(int space, int dim, std::vector<double> &vec);
+bool isValid(double space, double dim, std::vector<double> &vec);
 
-bool isExpression(std::string &elem);
+bool isExpression(std::string &elem, std::vector<double> &vec);
 
 bool isDouble(std::string elem);
 
@@ -21,4 +22,12 @@ void eraseSubstring(std::string &str, std::string substr);
 
 bool inRadians(std::string elem);
 
-bool inDomain(int space, int dim, std::vector<double> vec);
+bool inDomain(double space, double dim, std::vector<double> vec);
+
+bool isInteger(double a);
+
+bool validRadius(double r);
+
+bool validZenith(double phi, int i);
+
+bool validAzimuth(double theta);
