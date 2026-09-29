@@ -1,6 +1,6 @@
 # metten
 
-metten (named after **met**ric **ten**sor) is a geometric one-trick pony. Its singular purpose is to calculate the shortest distance between points on a Riemannian manifold. This tends to be easier said than done.
+metten (named after **met**ric **ten**sor) is a geometric one-trick pony. Its singular purpose is to calculate the shortest distance between points on a Riemannian manifold. This tends to be easier said than done. Analytic solutions are found where possible, otherwise gradient descent is used for approximation.
 
 ### Flat Manifolds
 * Cartesian coordinates in $\mathbb{R}^n \quad (x_1,\dots,x_n)$
