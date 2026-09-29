@@ -6,13 +6,13 @@ Eigen::MatrixXd metric(double space, Eigen::VectorXd vec) {
     } else if (space == 2.0) {
         return polar(vec);
     } else if (space == 3.1) {
-        return cylindrical(vec);
+        return cylinder(vec);
     } else if (space == 3.2) {
-        return spherical(vec);
+        return sphere(vec);
     } else if (space == 4.1) {
-        return hypercylindrical(vec);
+        return hypercylinder(vec);
     } else if (space == 4.2) {
-        return hyperspherical(vec);
+        return hypersphere(vec);
     }
 
     return Eigen::MatrixXd();
@@ -40,7 +40,7 @@ Eigen::Matrix2d polar(Eigen::Vector2d vec) {
     return mat;
 }
 
-Eigen::Matrix3d cylindrical(Eigen::Vector3d vec) {
+Eigen::Matrix3d cylinder(Eigen::Vector3d vec) {
     if (vec.size() != 3) {
         std::cout << "Dimension != 3, dumbass" << std::endl;
         return Eigen::Matrix3d();
@@ -55,7 +55,7 @@ Eigen::Matrix3d cylindrical(Eigen::Vector3d vec) {
     return mat;
 }
 
-Eigen::Matrix3d spherical(Eigen::Vector3d vec) {
+Eigen::Matrix3d sphere(Eigen::Vector3d vec) {
     if (vec.size() != 3) {
         std::cout << "Dimension != 3, dumbass" << std::endl;
         return Eigen::Matrix3d();
@@ -71,7 +71,7 @@ Eigen::Matrix3d spherical(Eigen::Vector3d vec) {
     return mat;
 }
 
-Eigen::MatrixXd hypercylindrical(Eigen::VectorXd vec) {
+Eigen::MatrixXd hypercylinder(Eigen::VectorXd vec) {
     int d = vec.size();
 
     if (d < 4) {
@@ -91,7 +91,7 @@ Eigen::MatrixXd hypercylindrical(Eigen::VectorXd vec) {
     return mat;
 }
 
-Eigen::MatrixXd hyperspherical(Eigen::VectorXd vec) {
+Eigen::MatrixXd hypersphere(Eigen::VectorXd vec) {
     int d = vec.size();
 
     if (d < 4) {

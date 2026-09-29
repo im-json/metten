@@ -12,12 +12,12 @@ Eigen::MatrixXd cartesian(double dim);
 
 Eigen::Matrix2d polar(Eigen::Vector2d vec);
 
-Eigen::Matrix3d cylindrical(Eigen::Vector3d vec);
+Eigen::Matrix3d cylinder(Eigen::Vector3d vec);
 
-Eigen::Matrix3d spherical(Eigen::Vector3d vec);
+Eigen::Matrix3d sphere(Eigen::Vector3d vec);
 
-Eigen::MatrixXd hypercylindrical(Eigen::VectorXd vec);
+Eigen::MatrixXd hypercylinder(Eigen::VectorXd vec);
 
-Eigen::MatrixXd hyperspherical(Eigen::VectorXd vec);
+Eigen::MatrixXd hypersphere(Eigen::VectorXd vec);
 
 double polyPath(struct Input in);

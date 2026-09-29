@@ -8,10 +8,12 @@ struct Input setup() {
 
     while (in.space < 1.0 || in.space > 4.2) {
         std::cout << "Select a coordinate system:\n";
-        std::cout << "Type 1 for Cartesian\n";
-        std::cout << "Type 2 for Polar\n";
-        std::cout << "Type 3.1 for Cylindrical, 3.2 for Spherical\n";
-        std::cout << "Type 4.1 for Hypercylindrical, 4.2 for Hyperspherical\n";
+        std::cout << "Type 1 for Cartesian (solid, in R^n)\n";
+        std::cout << "Type 2 for Polar (solid, in R^2)\n";
+        std::cout << "Type 3.1 for Cylinder (solid, in R^3)\n";
+        std::cout << "Type 3.2 for Sphere (solid, in R^3)\n";
+        std::cout << "Type 4.1 for Hypercylinder (solid, in R^n)\n";
+        std::cout << "Type 4.2 for Hypersphere (solid, in R^n)\n";
         std::cin >> in.space;
 
         if (in.space < 1.0 || in.space > 4.2) {
