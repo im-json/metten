@@ -7,7 +7,7 @@ struct Input setup() {
     in.dim = 0.0;
 
     while (in.space < 1.0 || in.space > 4.2) {
-        std::cout << "Select a coordinate system:\n";
+        std::cout << "Select a region:\n";
         std::cout << "Type 1 for Cartesian (solid, in R^n)\n";
         std::cout << "Type 2 for Polar (solid, in R^2)\n";
         std::cout << "Type 3.1 for Cylinder (solid, in R^3)\n";
