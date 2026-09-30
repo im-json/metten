@@ -8,8 +8,8 @@ metten (named after **met**ric **ten**sor) is a geometric one-trick pony. Its si
 * Cylinder (solid) in $\mathbb{R}^3 \quad (r,\theta,z)$
 * Ball (solid) in $\mathbb{R}^3 \quad (r,\phi,\theta)$
 * Torus (solid) in $\mathbb{R}^3 \quad (s,\phi,\theta)$
-* Hypercylinder (solid) in $\mathbb{R}^n, \ n \ge 4 \quad (r,\phi_1,\dots,\theta,z)$
-* Hyperball (solid) in $\mathbb{R}^n, \ n \ge 4 \quad (r,\phi_1,\dots,\theta)$
+* Hypercylinder (solid) in $\mathbb{R}^n, \quad (r,\phi_1,\dots,\theta,z)$
+* Hyperball (solid) in $\mathbb{R}^n, \quad (r,\phi_1,\dots,\theta)$
 * Torus (solid) in $\mathbb{R}^n \quad (s,\phi_1,\dots,\theta)$
 
 Flat manifolds are relatively simple cases. Euclidean space has zero Riemann curvature, and analytic solutions for shortest distance always exist.
