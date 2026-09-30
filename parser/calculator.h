@@ -1,11 +1,13 @@
 #pragma once
 
+#include <iostream>
 #include <string>
 #include <vector>
 #include <sstream>
 #include <algorithm>
 #include <stdexcept>
 #include <cstdlib>
+#include <cctype>
 #include <cmath>
 
 #include "../parser/parser_impl.h"
@@ -64,7 +66,8 @@ class Calculator : public Grammar<T> {
 
             this->infix("+", 10, add); this->infix("-", 10, sub);
             this->infix("*", 20, mul); this->infix("/", 20, div);
-            this->prefix("+", 30, pos); this->prefix("-", 30, neg);
+            this->prefix("+", 30, pos, keep_symbol_lbp);
+            this->prefix("-", 30, neg, keep_symbol_lbp);
             this->infix("^", 40, pow); this->postfix("!", 50, fac);
             this->constant("PI", static_cast<T>(M_PI));
             this->constant("pi", static_cast<T>(M_PI));
