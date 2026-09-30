@@ -1,7 +1,5 @@
 #include "checks.h"
 
-constexpr double E = 2.718281828459045;
-
 bool validVector(double space, double dim, std::vector<double> &vec) {
     std::string str, elem;
 
