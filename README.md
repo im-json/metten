@@ -1,6 +1,6 @@
 # metten
 
-metten is a geometric one-trick pony written in C++11.
+metten is a geometric one-trick pony, written in C++11.
 Its singular purpose is to calculate the shortest distance between points on a Riemannian manifold.
 This is often easier said than done.
 Analytic solutions are found where possible, otherwise gradient descent is used for approximation.
