@@ -17,7 +17,7 @@ Distance between two points is the $\ell^2$ norm of the difference between the C
 
 ### Positive Curvature Manifolds
 * 2-sphere $\mathbb{S}^2$ (hollow) $\quad (\phi,\theta)$
-* 2-torus $\mathbb{T}^2$ (hollow) $\quad (\phi,\theta)$
+* 2-torus $\mathbb{T}^2$ (hollow) $\quad (\theta_1,\theta_2)$
 * n-sphere $\mathbb{S}^n$ (hollow) $\quad (\phi_1,\dots,\theta)$
 * n-torus $\mathbb{T}^n$ (hollow) $\quad (\theta_1,\dots,\theta_n)$
 
