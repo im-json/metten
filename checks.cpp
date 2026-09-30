@@ -1,6 +1,5 @@
 #include "checks.h"
 
-constexpr double PI = 3.141592653589793;
 constexpr double E = 2.718281828459045;
 
 bool validVector(double space, double dim, std::vector<double> &vec) {
@@ -47,9 +46,9 @@ bool validElement(std::string &elem, std::vector<double> &vec) {
 
     if (hasPi) {
         if (!elem.empty()) {
-            vec.push_back(std::stod(elem)*PI);
+            vec.push_back(std::stod(elem)*M_PI);
         } else {
-            vec.push_back(PI);
+            vec.push_back(M_PI);
         }
     } else {
         if (!isDouble(elem)) {
@@ -165,7 +164,7 @@ bool validRadius(double r) {
 }
 
 bool validZenith(double phi, int i) {
-    if (phi < 0 || phi > PI) {
+    if (phi < 0 || phi > M_PI) {
         if (!i) {
             std::cout << "phi is not in [0, PI], dumbass. Try again:\n";
         } else {
@@ -178,7 +177,7 @@ bool validZenith(double phi, int i) {
 }
 
 bool validAzimuth(double theta) {
-    if (theta < 0 || theta >= 2*PI) {
+    if (theta < 0 || theta >= 2*M_PI) {
         std::cout << "theta is not in [0, 2*PI), dumbass. Try again:\n";
         return false;
     }
