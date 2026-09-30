@@ -2,8 +2,8 @@
 
 metten is a geometric one-trick pony, written in C++14.
 Its singular purpose is to calculate the shortest distance between points on a Riemannian manifold.
-This is often easier said than done.
 Analytic solutions are found where possible, otherwise gradient descent is used for approximation.
+This is often easier said than done.
 
 ### Flat Manifolds
 * Cartesian in $\mathbb{R}^n \quad (x_1,\dots,x_n)$
