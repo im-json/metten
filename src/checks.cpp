@@ -2,16 +2,28 @@
 
 bool validVector(double space, double dim, std::vector<double> &vec) {
     std::string str, elem;
+    double val;
 
     std::getline(std::cin >> std::ws, str);
-    eraseSubstring(str, " ");
+    str.erase(std::remove(str.begin(), str.end(), ' '), str.end());
     std::stringstream stream(str);
 
+    Calculator<double> calc;
+
     while (std::getline(stream, elem, ',')) {
-        if (!validElement(elem, vec)) {
-            std::cout << "Invalid vector, dumbass. Try again:\n";
+        try {
+            val = calc.parse(elem);
+            // std::cout << "val: " << val << std::endl;
+        }
+        catch(const std::runtime_error &e) {
+            std::cout << elem << " is invalid, dumbass. Try again:\n";
             return false;
         }
+        catch(const std::exception &e) {
+            std::cout << elem << " is invalid, dumbass. Try again:\n";
+            return false;
+        }
+        vec.push_back(val);
     }
 
     if (vec.size() < dim) {
@@ -27,87 +39,6 @@ bool validVector(double space, double dim, std::vector<double> &vec) {
     }
 
     return true;
-}
-
-bool validElement(std::string &elem, std::vector<double> &vec) {
-    bool hasPi = false;
-    
-    if (!isDouble(elem) && inRadians(elem)) {
-        eraseSubstring(elem, "pi");
-        eraseSubstring(elem, "PI");
-        eraseSubstring(elem, "Pi");
-        eraseSubstring(elem, "pI");
-        eraseSubstring(elem, "*");
-
-        hasPi = true;
-    }
-
-    if (hasPi) {
-        if (!elem.empty()) {
-            vec.push_back(std::stod(elem)*M_PI);
-        } else {
-            vec.push_back(M_PI);
-        }
-    } else {
-        if (!isDouble(elem)) {
-            return false;
-        }
-        vec.push_back(std::stod(elem));
-    }
-
-    return true;
-}
-
-bool isDouble(std::string elem) {
-    try {
-        size_t valid = 0;
-        std::stod(elem, &valid);
-        return (valid == elem.length());
-    }
-    catch (std::invalid_argument) {
-        return false;
-    }
-    catch (std::out_of_range) {
-        return false;
-    }
-}
-
-bool hasSubstring(std::string &str, std::string substr) {
-    return (str.find(substr) != std::string::npos);
-}
-
-void eraseSubstring(std::string &str, std::string substr) {
-    if (substr.empty()) {
-        return;
-    }
-
-    size_t idx = 0;
-
-    while ((idx = str.find(substr)) != std::string::npos) {
-        str.erase(idx, substr.length());
-    }
-}
-
-bool inRadians(std::string elem) {
-    if (elem == "pi" || elem == "PI" || elem == "Pi" || elem == "pI") {
-        return true;        
-    }
-
-    try {
-        size_t valid = 0;
-        std::stod(elem, &valid);
-        return (
-            (valid == elem.length() - 2 || valid == elem.length() - 3) &&
-            (hasSubstring(elem, "pi") || hasSubstring(elem, "PI") ||
-             hasSubstring(elem, "Pi") || hasSubstring(elem, "pI"))
-        );
-    }
-    catch (std::invalid_argument) {
-        return false;
-    }
-    catch (std::out_of_range) {
-        return false;
-    }
 }
 
 bool inDomain(double space, double dim, std::vector<double> vec) {

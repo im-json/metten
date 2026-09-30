@@ -10,17 +10,9 @@
 #include <cstdlib>
 #include <cmath>
 
+#include "../parser/calculator.h"
+
 bool validVector(double space, double dim, std::vector<double> &vec);
-
-bool validElement(std::string &elem, std::vector<double> &vec);
-
-bool isDouble(std::string elem);
-
-bool hasSubstring(std::string &str, std::string substr);
-
-void eraseSubstring(std::string &str, std::string substr);
-
-bool inRadians(std::string elem);
 
 bool inDomain(double space, double dim, std::vector<double> vec);
 

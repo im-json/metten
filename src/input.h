@@ -2,6 +2,8 @@
 
 #include <iostream>
 #include <Eigen/Dense>
+#include <cctype>
+#include <string>
 
 #include "checks.h"
 
@@ -18,3 +20,5 @@ struct Input setup();
 void getPoints(struct Input &in);
 
 Eigen::VectorXd point(double space, double dim);
+
+int main2();
