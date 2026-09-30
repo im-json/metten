@@ -8,12 +8,12 @@ Analytic solutions are found where possible, otherwise gradient descent is used 
 ### Flat Manifolds
 * Cartesian in $\mathbb{R}^n \quad (x_1,\dots,x_n)$
 * Polar in $\mathbb{R}^2 \quad (r,\theta)$
-* Cylinder (solid) in $\mathbb{R}^3 \quad (r,\theta,z)$
-* Ball (solid) in $\mathbb{R}^3 \quad (r,\phi,\theta)$
-* Torus (solid) in $\mathbb{R}^3 \quad (s,\phi,\theta)$
-* Hypercylinder (solid) in $\mathbb{R}^n, \quad (r,\phi_1,\dots,\theta,z)$
-* Hyperball (solid) in $\mathbb{R}^n, \quad (r,\phi_1,\dots,\theta)$
-* Torus (solid) in $\mathbb{R}^n \quad (s,\phi_1,\dots,\theta)$
+* Cylinder in $\mathbb{R}^3$ (solid) $\quad (r,\theta,z)$
+* Ball in $\mathbb{R}^3$ (solid) $\quad (r,\phi,\theta)$
+* Torus in $\mathbb{R}^3$ (solid) $\quad (s,\phi,\theta)$
+* Hypercylinder in $\mathbb{R}^n$ (solid) $\quad (r,\phi_1,\dots,\theta,z)$
+* Hyperball in $\mathbb{R}^n$ (solid) $\quad (r,\phi_1,\dots,\theta)$
+* Torus in $\mathbb{R}^n$ (solid) $\quad (s,\phi_1,\dots,\theta)$
 
 Flat manifolds are relatively simple cases.
 Euclidean space has zero Riemann curvature, and analytic solutions for shortest distance always exist.
