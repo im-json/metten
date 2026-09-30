@@ -1,7 +1,7 @@
 # metten
 
 metten is a geometric one-trick pony, written in C++14.
-Its singular purpose is to calculate the shortest distance between points on a Riemannian manifold.
+Its sole purpose is to calculate the shortest distance between points on a Riemannian manifold.
 Analytic solutions are found where possible, otherwise gradient descent is used for approximation.
 This is often easier said than done.
 
