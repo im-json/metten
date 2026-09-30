@@ -13,7 +13,7 @@ Analytic solutions are found where possible, otherwise gradient descent is used 
 * Torus in $\mathbb{R}^3$ (solid) $\quad (s,\phi,\theta)$
 * Hypercylinder in $\mathbb{R}^n$ (solid) $\quad (r,\phi_1,\dots,\theta,z)$
 * Hyperball in $\mathbb{R}^n$ (solid) $\quad (r,\phi_1,\dots,\theta)$
-* Torus in $\mathbb{R}^n$ (solid) $\quad (s,\phi_1,\dots,\theta)$
+* Torus in $\mathbb{R}^n$ (solid) $\quad (r,\phi_1,\dots,\theta)$
 
 Flat manifolds are relatively simple cases.
 Euclidean space has zero Riemann curvature, and analytic solutions for shortest distance always exist.
