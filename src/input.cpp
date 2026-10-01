@@ -25,6 +25,8 @@ struct Input setup() {
         std::cin >> in.space;
 
         if (in.space < 1.0 || in.space > 4.2) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
             std::cout << "Enter a valid number, dumbass.\n";
         }
     }
@@ -37,6 +39,8 @@ struct Input setup() {
             std::cin >> in.dim;
 
             if (in.dim < minDim || !isInteger(in.dim)) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
                 std::cout << "Enter an integer >= " << minDim << ", dumbass.\n";
             }
         }
