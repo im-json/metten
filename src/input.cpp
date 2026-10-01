@@ -16,7 +16,7 @@ struct Input setup() {
         // std::cout << "Type 2.5 for 2-cone (hollow)\n";
         std::cout << "Type 3.1 for Cylinder in R^3 (solid)\n";
         std::cout << "Type 3.2 for Ball in R^3 (solid)\n";
-        // std::cout << "Type 3.3 for Torus in R^3 (solid)\n";
+        std::cout << "Type 3.3 for Torus in R^3 (solid)\n";
         // std::cout << "Type 3.4 for Cone in R^3 (solid)\n";
         // std::cout << "Type 3.5 for n-sphere S^n (hollow)\n";
         // std::cout << "Type 2.4 for n-torus T^n (hollow)\n";
@@ -31,28 +31,47 @@ struct Input setup() {
         }
     }
 
+    double minDim = std::floor(in.space);
+
     if (in.space == 4.1 || in.space == 4.2) {
-        while (in.dim < std::floor(in.space) || std::floor(in.dim) != in.dim) {
+        while (in.dim < minDim || std::floor(in.dim) != in.dim) {
             std::cout << "Enter dimension:\n";
             std::cin >> in.dim;
 
-            if (in.dim < std::floor(in.space) || std::floor(in.dim) != in.dim) {
+            if (in.dim < minDim || std::floor(in.dim) != in.dim) {
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Enter an integer >= " << std::floor(in.space) << ", dumbass.\n";
+                std::cout << "Enter an integer >= " << minDim << ", dumbass. Try again:\n";
             }
         }
     } else {
-        in.dim = std::floor(in.space);
+        in.dim = minDim;
     }
 
-    getPoints(in, 0);
-    getPoints(in, 1);
+    if (in.space == 3.3) {
+        double a = 0.0;
+
+        while (a <= 0.0) {
+            std::cout << "Enter major radius a:\n";
+            std::cin >> a;
+
+            if (a <= 0.0) {
+                std::cin.clear();
+                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+                std::cout << "Enter an integer > 0, dumbass. Try again:\n";
+            }
+        }
+
+        in.constants.push_back(a);
+    }
+
+    getPoint(in, 0);
+    getPoint(in, 1);
 
     return in;
 }
 
-void getPoints(struct Input &in, int num) {
+void getPoint(struct Input &in, int num) {
     in.riemCurveSign = 0;
 
     if (in.space == 1.0) {
@@ -66,6 +85,9 @@ void getPoints(struct Input &in, int num) {
     } else if (in.space == 3.2) {
         std::cout << "Enter point " << num + 1 << " in the form r,phi,theta. ";
         std::cout << "Use radians for phi and theta (e.g. 2*PI):\n";
+    } else if (in.space == 3.3) {
+        std::cout << "Enter point " << num + 1 << " in the form r,phi,theta. ";
+        std::cout << "Use radians for phi and theta (e.g. 2*PI):\n";
     } else if (in.space == 4.1) {
         std::cout << "Enter point " << num + 1 << " in the form r,phi1,...,theta,z. ";
         std::cout << "Use radians for phis and theta (e.g. 2*PI):\n";
@@ -74,12 +96,12 @@ void getPoints(struct Input &in, int num) {
         std::cout << "Use radians for phis and theta (e.g. 2*PI):\n";
     }
 
-    in.points.push_back(point(in.space, std::floor(in.dim)));
+    in.points.push_back(point(in.space, std::floor(in.dim), in.constants));
 }
 
-Eigen::VectorXd point(double space, double dim) {
+Eigen::VectorXd point(double space, double dim, std::vector<double> constants) {
     std::vector<double> vec;
-    while (!validVector(space, dim, vec)) {
+    while (!validVector(space, dim, constants, vec)) {
         vec.clear();
     }
 

@@ -6,7 +6,7 @@
 
 #include "input.h"
 
-Eigen::MatrixXd metric(double space, Eigen::VectorXd vec);
+Eigen::MatrixXd metric(struct Input in, Eigen::VectorXd vec);
 
 Eigen::MatrixXd cartesian(double dim);
 
@@ -16,7 +16,7 @@ Eigen::Matrix3d cylinderSolid(Eigen::Vector3d vec);
 
 Eigen::Matrix3d ballSolid(Eigen::Vector3d vec);
 
-Eigen::Matrix3d torusSolid(Eigen::Vector3d vec);
+Eigen::Matrix3d torusSolid(struct Input in, Eigen::Vector3d vec);
 
 Eigen::MatrixXd hypercylinderSolid(Eigen::VectorXd vec);
 

@@ -1,6 +1,6 @@
 #include "checks.h"
 
-bool validVector(double space, double dim, std::vector<double> &vec) {
+bool validVector(double space, double dim, std::vector<double> constants, std::vector<double> &vec) {
     std::string str, elem;
     double val;
 
@@ -34,45 +34,71 @@ bool validVector(double space, double dim, std::vector<double> &vec) {
         return false;
     }
 
-    if (!inDomain(space, dim, vec)) {
+    if (!inDomain(space, dim, constants, vec)) {
         return false;
     }
 
     return true;
 }
 
-bool inDomain(double space, double dim, std::vector<double> vec) {
+bool inDomain(double space, double dim, std::vector<double> constants, std::vector<double> vec) {
     if (space == 2.0) {
-        if (!validRadius(vec[0]) | !validAzimuth(vec[1])) {
+        if (!validRadius(vec[0])) {
+            return false;
+        }
+        if (!validAzimuth(vec[1], "theta")) {
             return false;
         }
     } else if (space == 3.1) {
-        if (!validRadius(vec[0]) | !validAzimuth(vec[1])) {
+        if (!validRadius(vec[0])) {
+            return false;
+        }
+        if (!validAzimuth(vec[1], "theta")) {
             return false;
         }
     } else if (space == 3.2) {
-        if (!validRadius(vec[0]) | !validZenith(vec[1], 0) | !validAzimuth(vec[2])) {
+        if (!validRadius(vec[0])) {
+            return false;
+        }
+        if (!validZenith(vec[1], "phi")) {
+            return false;
+        }
+        if (!validAzimuth(vec[2], "theta")) {
+            return false;
+        }
+    }  else if (space == 3.3) {
+        if (!validMajorRadius(vec[0], constants[0])) {
+            return false;
+        }
+        if (!validAzimuth(vec[1], "phi")) {
+            return false;
+        }
+        if (!validAzimuth(vec[2], "theta")) {
             return false;
         }
     } else if (space == 4.1) {
-        if (!validRadius(vec[0]) | !validAzimuth(vec[dim - 2])) {
+        if (!validRadius(vec[0])) {
             return false;
         }
-
         for (int i = 1; i < dim - 2; i++) {
-            if (!validZenith(vec[i], i)) {
+            if (!validZenith(vec[i], "phi" + std::to_string(i))) {
                 return false;
             }
+        }
+        if (!validAzimuth(vec[dim - 2], "theta")) {
+            return false;
         }
     } else if (space == 4.2) {
-        if (!validRadius(vec[0]) | !validAzimuth(vec[dim - 1])) {
+        if (!validRadius(vec[0])) {
             return false;
         }
-
         for (int i = 1; i < dim - 1; i++) {
-            if (!validZenith(vec[i], i)) {
+            if (!validZenith(vec[i], "phi" + std::to_string(i))) {
                 return false;
             }
+        }
+        if (!validAzimuth(vec[dim - 1], "theta")) {
+            return false;
         }
     }
 
@@ -88,22 +114,28 @@ bool validRadius(double r) {
     return true;
 }
 
-bool validZenith(double phi, int i) {
-    if (phi < 0 || phi > M_PI) {
-        if (!i) {
-            std::cout << "phi is not in [0, PI], dumbass. Try again:\n";
-        } else {
-            std::cout << "phi" << i << " is not in [0, PI], dumbass. Try again:\n";
-        }
+bool validMajorRadius(double r, double a) {
+    if (r <= 0 || r >= a) {
+        std::cout << "r is not in (0,a), dumbass. Try again:\n";
         return false;
     }
 
     return true;
 }
 
-bool validAzimuth(double theta) {
-    if (theta < 0 || theta >= 2*M_PI) {
-        std::cout << "theta is not in [0, 2*PI), dumbass. Try again:\n";
+bool validZenith(double x, std::string name) {
+    if (x < 0 || x > M_PI) {
+        std::cout << name << " is not in [0,PI], dumbass. Try again:\n";
+
+        return false;
+    }
+
+    return true;
+}
+
+bool validAzimuth(double x, std::string name) {
+    if (x < 0 || x >= 2*M_PI) {
+        std::cout << name << " is not in [0,2*PI), dumbass. Try again:\n";
         return false;
     }
 

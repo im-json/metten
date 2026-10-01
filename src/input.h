@@ -17,6 +17,6 @@ struct Input {
 
 struct Input setup();
 
-void getPoints(struct Input &in, int num);
+void getPoint(struct Input &in, int num);
 
-Eigen::VectorXd point(double space, double dim);
+Eigen::VectorXd point(double space, double dim, std::vector<double> constants);

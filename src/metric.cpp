@@ -1,17 +1,17 @@
 #include "metric.h"
 
-Eigen::MatrixXd metric(double space, Eigen::VectorXd vec) {
-    if (space == 1.0) {
+Eigen::MatrixXd metric(struct Input in, Eigen::VectorXd vec) {
+    if (in.space == 1.0) {
         return cartesian(vec.size());
-    } else if (space == 2.0) {
+    } else if (in.space == 2.0) {
         return polar(vec);
-    } else if (space == 3.1) {
+    } else if (in.space == 3.1) {
         return cylinderSolid(vec);
-    } else if (space == 3.2) {
+    } else if (in.space == 3.2) {
         return ballSolid(vec);
-    } else if (space == 4.1) {
+    } else if (in.space == 4.1) {
         return hypercylinderSolid(vec);
-    } else if (space == 4.2) {
+    } else if (in.space == 4.2) {
         return hyperballSolid(vec);
     }
 
@@ -68,6 +68,23 @@ Eigen::Matrix3d ballSolid(Eigen::Vector3d vec) {
     mat << 1, 0, 0, 
            0, r*r, 0,
            0, 0, r*r*std::sin(phi)*std::sin(phi);
+    return mat;
+}
+
+Eigen::Matrix3d torusSolid(struct Input in, Eigen::Vector3d vec) {
+    if (vec.size() != 3) {
+        std::cout << "Dimension != 3, dumbass" << std::endl;
+        return Eigen::Matrix3d();
+    }
+
+    double r = vec(0);
+    double phi = vec(1);
+    double R = r + in.constants[0];
+
+    Eigen::Matrix3d mat;
+    mat << 1, 0, 0, 
+           0, r*r, 0,
+           0, 0, (R + r*std::cos(phi))*(R + r*std::cos(phi));
     return mat;
 }
 
@@ -136,7 +153,7 @@ double polyPath(struct Input in) {
         delta = curr - prev;
         mid = curr - (prev / 2);
 
-        len += std::sqrt(delta.transpose() * metric(in.space, mid) * delta);
+        len += std::sqrt(delta.transpose() * metric(in, mid) * delta);
     }
 
     return len;
