@@ -13,9 +13,7 @@ double distance(struct Input in) {
 }
 
 Eigen::VectorXd polarToCart(Eigen::VectorXd vec) {
-    double r = vec(0), theta = vec(1);
-
-    Eigen::VectorXd cartComponent{{ r*std::cos(theta), r*std::sin(theta) }};
+    Eigen::VectorXd cartComponent{{ vec(0)*std::cos(vec(1)), vec(0)*std::sin(vec(1)) }};
 
     return cartComponent;
 }
