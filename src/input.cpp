@@ -31,21 +31,19 @@ struct Input setup() {
         }
     }
 
-    double minDim = std::floor(in.space);
-
     if (in.space == 4.1 || in.space == 4.2) {
-        while (in.dim < minDim || std::floor(in.dim) != in.dim) {
+        while (in.dim < std::floor(in.space) || std::floor(in.dim) != in.dim) {
             std::cout << "Enter dimension:\n";
             std::cin >> in.dim;
 
-            if (in.dim < minDim || std::floor(in.dim) != in.dim) {
+            if (in.dim < std::floor(in.space) || std::floor(in.dim) != in.dim) {
                 std::cin.clear();
                 std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Enter an integer >= " << minDim << ", dumbass.\n";
+                std::cout << "Enter an integer >= " << std::floor(in.space) << ", dumbass.\n";
             }
         }
     } else {
-        in.dim = std::floor(minDim);
+        in.dim = std::floor(in.space);
     }
 
     getPoints(in, 0);

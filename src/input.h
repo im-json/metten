@@ -11,6 +11,7 @@ struct Input {
     double space;
     double dim;
     int riemCurveSign;
+    std::vector<double> constants;
     std::vector<Eigen::VectorXd> points;
 };
 
