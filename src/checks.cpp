@@ -79,10 +79,6 @@ bool inDomain(double space, double dim, std::vector<double> vec) {
     return true;
 }
 
-bool isInteger(double a) {
-    return (std::floor(a) == a);
-}
-
 bool validRadius(double r) {
     if (r < 0) {
         std::cout << "r must be non-negative, dumbass. Try again:\n";

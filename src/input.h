@@ -11,14 +11,11 @@ struct Input {
     double space;
     double dim;
     int riemCurveSign;
-    Eigen::VectorXd p1;
-    Eigen::VectorXd p2;
+    std::vector<Eigen::VectorXd> points;
 };
 
 struct Input setup();
 
-void getPoints(struct Input &in);
+void getPoints(struct Input &in, int num);
 
 Eigen::VectorXd point(double space, double dim);
-
-int main2();

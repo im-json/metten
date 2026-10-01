@@ -42,18 +42,18 @@ Eigen::VectorXd BallToCart(Eigen::VectorXd vec) {
 
 double euclidean(struct Input in) {
     if (in.space == 1.0) {
-        return (in.p2 - in.p1).norm();
+        return (in.points[1] - in.points[0]).norm();
     } else if (in.space == 2.0) {
-        double r1 = in.p1(0), r2 = in.p2(0);
-        double phi1 = in.p1(1), phi2 = in.p2(1);
+        double r1 = in.points[0](0), r2 = in.points[1](0);
+        double phi1 = in.points[0](1), phi2 = in.points[1](1);
         return std::sqrt(r1*r1 + r2*r2 - 2*r1*r2*std::cos(phi2 - phi1));
     } else if (in.space == 3.1 || in.space == 4.1) {
-        Eigen::VectorXd p1CartComponent = CylinderToCart(in.p1);
-        Eigen::VectorXd p2CartComponent = CylinderToCart(in.p2);
+        Eigen::VectorXd p1CartComponent = CylinderToCart(in.points[0]);
+        Eigen::VectorXd p2CartComponent = CylinderToCart(in.points[1]);
         return (p2CartComponent - p1CartComponent).norm();
     } else if (in.space == 3.2 || in.space == 4.2) {
-        Eigen::VectorXd p1CartComponent = BallToCart(in.p1);
-        Eigen::VectorXd p2CartComponent = BallToCart(in.p2);
+        Eigen::VectorXd p1CartComponent = BallToCart(in.points[0]);
+        Eigen::VectorXd p2CartComponent = BallToCart(in.points[1]);
         return (p2CartComponent - p1CartComponent).norm();
     }
 

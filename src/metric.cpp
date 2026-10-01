@@ -124,8 +124,8 @@ double polyPath(struct Input in) {
     std::cin >> n;
 
     Eigen::VectorXd prev, mid, delta;
-    Eigen::VectorXd curr = in.p1;
-    Eigen::VectorXd dist = in.p2 - in.p1;
+    Eigen::VectorXd curr = in.points[0];
+    Eigen::VectorXd dist = in.points[1] - in.points[0];
     Eigen::VectorXd step = dist / n;
 
     double len = 0.0;
