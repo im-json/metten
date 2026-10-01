@@ -12,12 +12,14 @@ Eigen::MatrixXd cartesian(double dim);
 
 Eigen::Matrix2d polar(Eigen::Vector2d vec);
 
-Eigen::Matrix3d cylinder(Eigen::Vector3d vec);
+Eigen::Matrix3d cylinderSolid(Eigen::Vector3d vec);
 
-Eigen::Matrix3d ball(Eigen::Vector3d vec);
+Eigen::Matrix3d ballSolid(Eigen::Vector3d vec);
 
-Eigen::MatrixXd hypercylinder(Eigen::VectorXd vec);
+Eigen::Matrix3d torusSolid(Eigen::Vector3d vec);
 
-Eigen::MatrixXd hyperball(Eigen::VectorXd vec);
+Eigen::MatrixXd hypercylinderSolid(Eigen::VectorXd vec);
+
+Eigen::MatrixXd hyperballSolid(Eigen::VectorXd vec);
 
 double polyPath(struct Input in);

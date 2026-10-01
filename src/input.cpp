@@ -14,14 +14,14 @@ struct Input setup() {
         // std::cout << "Type 2.3 for 2-sphere S^2 (hollow)\n";
         // std::cout << "Type 2.4 for 2-torus T^2 (hollow)\n";
         // std::cout << "Type 2.5 for 2-cone (hollow)\n";
-        std::cout << "Type 3.1 for Cylinder (solid) in R^3\n";
-        std::cout << "Type 3.2 for Ball (solid) in R^3\n";
+        std::cout << "Type 3.1 for Cylinder in R^3 (solid)\n";
+        std::cout << "Type 3.2 for Ball in R^3 (solid)\n";
         // std::cout << "Type 3.3 for Torus in R^3 (solid)\n";
         // std::cout << "Type 3.4 for Cone in R^3 (solid)\n";
         // std::cout << "Type 3.5 for n-sphere S^n (hollow)\n";
         // std::cout << "Type 2.4 for n-torus T^n (hollow)\n";
-        std::cout << "Type 4.1 for Hypercylinder (solid) in R^n\n";
-        std::cout << "Type 4.2 for Hyperball (solid) in R^n\n";
+        std::cout << "Type 4.1 for Hypercylinder in R^n (solid)\n";
+        std::cout << "Type 4.2 for Hyperball in R^n (solid)\n";
         std::cin >> in.space;
 
         if (in.space < 1.0 || in.space > 4.2) {
@@ -83,18 +83,18 @@ void getPoints(struct Input &in) {
     } else if (in.space == 4.1) {
         in.riemCurveSign = 0;
         std::cout << "Enter point 1 in the form r,phi1,...,theta,z. ";
-        std::cout << "Use radians for phis and theta (e.g. 2PI):\n";
+        std::cout << "Use radians for phis and theta (e.g. 2*PI):\n";
         in.p1 = point(in.space, in.dim);
         std::cout << "Enter point 2 in the form r,phi1,...,theta,z. ";
-        std::cout << "Use radians for phis and theta (e.g. 2PI):\n";
+        std::cout << "Use radians for phis and theta (e.g. 2*PI):\n";
         in.p2 = point(in.space, in.dim);
     } else if (in.space == 4.2) {
         in.riemCurveSign = 0;
         std::cout << "Enter point 1 in the form r,phi1,...,theta. ";
-        std::cout << "Use radians for phis and theta (e.g. 2PI):\n";
+        std::cout << "Use radians for phis and theta (e.g. 2*PI):\n";
         in.p1 = point(in.space, in.dim);
         std::cout << "Enter point 2 in the form r,phi1,...,theta. ";
-        std::cout << "Use radians for phis and theta (e.g. 2PI):\n";
+        std::cout << "Use radians for phis and theta (e.g. 2*PI):\n";
         in.p2 = point(in.space, in.dim);
     }
 }
