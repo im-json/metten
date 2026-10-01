@@ -58,7 +58,7 @@ void getPoints(struct Input &in, int num) {
     if (in.space == 1.0) {
         std::cout << "Enter point " << num + 1 << " in the form x1,...,xn:\n";
     } else if (in.space == 2.0) {
-        std::cout << "Enter point " << num + 1 << " 1 in the form r,theta. ";
+        std::cout << "Enter point " << num + 1 << " in the form r,theta. ";
         std::cout << "Use radians for theta (e.g. 2*PI):\n";
     } else if (in.space == 3.1) {
         std::cout << "Enter point " << num + 1 << " in the form r,theta,z. ";

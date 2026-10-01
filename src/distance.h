@@ -8,11 +8,13 @@
 
 double distance(struct Input in);
 
-Eigen::VectorXd CylinderToCart(Eigen::VectorXd vec);
+Eigen::VectorXd polarToCart(Eigen::VectorXd vec);
 
-Eigen::VectorXd BallToCart(Eigen::VectorXd vec);
+Eigen::VectorXd cylinderToCart(Eigen::VectorXd vec);
 
-double euclidean(struct Input in);
+Eigen::VectorXd ballToCart(Eigen::VectorXd vec);
+
+Eigen::VectorXd cartComponent(struct Input in, int num);
 
 double posCurvature(struct Input in);
 
