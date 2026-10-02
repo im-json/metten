@@ -5,18 +5,25 @@
 #include <cctype>
 #include <string>
 
-#include "checks.h"
+#include "value.h"
 
 struct Input {
     double space;
     double dim;
     int riemCurveSign;
-    std::vector<double> constants;
+    std::vector<Value> params;
+    std::vector<Value> consts;
     std::vector<Eigen::VectorXd> points;
 };
 
 struct Input setup();
 
-void getPoint(struct Input &in, int num);
+void setupSpace(struct Input &in);
 
-Eigen::VectorXd point(double space, double dim, std::vector<double> constants);
+void setupDim(struct Input &in);
+
+void setupConsts(struct Input &in);
+
+void setupParams(struct Input &in);
+
+void setupPoints(struct Input &in);

@@ -5,7 +5,18 @@ struct Input setup() {
 
     in.space = 0.0;
     in.dim = 0.0;
+    in.consts.resize(0);
 
+    setupSpace(in);
+    setupDim(in);
+    setupConsts(in);
+    setupParams(in);
+    setupPoints(in);
+
+    return in;
+}
+
+void setupSpace(struct Input &in) {
     while (in.space < 1.0 || in.space > 4.2) {
         std::cout << "Select a region:\n";
         std::cout << "Type 1 for Cartesian in R^n\n";
@@ -30,8 +41,10 @@ struct Input setup() {
             std::cout << "Enter a valid number, dumbass.\n";
         }
     }
+}
 
-    double minDim = std::floor(in.space);
+void setupDim(struct Input &in) {
+    int minDim = static_cast<int>(std::floor(in.space));
 
     if (in.space == 4.1 || in.space == 4.2) {
         while (in.dim < minDim || std::floor(in.dim) != in.dim) {
@@ -48,65 +61,116 @@ struct Input setup() {
         in.dim = minDim;
     }
 
-    if (in.space == 3.3) {
-        double a = 0.0;
-
-        while (a <= 0.0) {
-            std::cout << "Enter major radius a:\n";
-            std::cin >> a;
-
-            if (a <= 0.0) {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Enter an integer > 0, dumbass. Try again:\n";
-            }
-        }
-
-        in.constants.push_back(a);
-    }
-
-    getPoint(in, 0);
-    getPoint(in, 1);
-
-    return in;
+    in.params.resize(minDim);
 }
 
-void getPoint(struct Input &in, int num) {
+void setupConsts(struct Input &in) {
+    if (in.space == 3.3) {
+        in.consts.resize(1);
+        in.consts[0].name = "a";
+        in.consts[0].closed = {0, 0};
+        in.consts[0].bounds = {0, INFINITY};
+    }
+}
+
+void setupParams(struct Input &in) {
     in.riemCurveSign = 0;
 
     if (in.space == 1.0) {
-        std::cout << "Enter point " << num + 1 << " in the form x1,...,xn:\n";
+        for (int i = 0; i < in.dim; i++) {
+            in.params[i].name = "x" + std::to_string(i + 1);
+            in.params[i].closed = {0, 0};
+            in.params[i].bounds = {-INFINITY, INFINITY};
+        }
     } else if (in.space == 2.0) {
-        std::cout << "Enter point " << num + 1 << " in the form r,theta. ";
-        std::cout << "Use radians for theta (e.g. 2*PI):\n";
-    } else if (in.space == 3.1) {
-        std::cout << "Enter point " << num + 1 << " in the form r,theta,z. ";
-        std::cout << "Use radians for theta (e.g. 2*PI):\n";
-    } else if (in.space == 3.2) {
-        std::cout << "Enter point " << num + 1 << " in the form r,phi,theta. ";
-        std::cout << "Use radians for phi and theta (e.g. 2*PI):\n";
-    } else if (in.space == 3.3) {
-        std::cout << "Enter point " << num + 1 << " in the form r,phi,theta. ";
-        std::cout << "Use radians for phi and theta (e.g. 2*PI):\n";
-    } else if (in.space == 4.1) {
-        std::cout << "Enter point " << num + 1 << " in the form r,phi1,...,theta,z. ";
-        std::cout << "Use radians for phis and theta (e.g. 2*PI):\n";
-    } else if (in.space == 4.2) {
-        std::cout << "Enter point " << num + 1 << " in the form r,phi1,...,theta. ";
-        std::cout << "Use radians for phis and theta (e.g. 2*PI):\n";
-    }
+        in.params[0].name = "r";
+        in.params[0].closed = {1, 0};
+        in.params[0].bounds = {0, INFINITY};
 
-    in.points.push_back(point(in.space, std::floor(in.dim), in.constants));
+        in.params[1].name = "theta";
+        in.params[1].closed = {1, 0};
+        in.params[1].bounds = {0, 2*M_PI};
+    } else if (in.space == 3.1) {
+        in.params[0].name = "r";
+        in.params[0].closed = {1, 0};
+        in.params[0].bounds = {0, INFINITY};
+
+        in.params[1].name = "theta";
+        in.params[1].closed = {1, 0};
+        in.params[1].bounds = {0, 2*M_PI};
+
+        in.params[2].name = "z";
+        in.params[2].closed = {1, 0};
+        in.params[2].bounds = {0, INFINITY};
+    } else if (in.space == 3.2) {
+        in.params[0].name = "r";
+        in.params[0].closed = {1, 0};
+        in.params[0].bounds = {0, INFINITY};
+
+        in.params[1].name = "phi";
+        in.params[1].closed = {1, 1};
+        in.params[1].bounds = {0, M_PI};
+
+        in.params[2].name = "theta";
+        in.params[2].closed = {1, 0};
+        in.params[2].bounds = {0, 2*M_PI};
+    } else if (in.space == 3.3) {
+        in.params[0].name = "r";
+        in.params[0].closed = {1, 0};
+        in.params[0].bounds = {0, INFINITY};
+
+        in.params[1].name = "phi";
+        in.params[1].closed = {1, 1};
+        in.params[1].bounds = {0, M_PI};
+
+        in.params[2].name = "theta";
+        in.params[2].closed = {1, 0};
+        in.params[2].bounds = {0, 2*M_PI};
+    } else if (in.space == 4.1) {
+        in.params[0].name = "r";
+        in.params[0].closed = {1, 0};
+        in.params[0].bounds = {0, INFINITY};
+
+        for (int i = 1; i < in.dim - 2; i++) {
+            in.params[i].name = "phi" + std::to_string(i);
+            in.params[i].closed = {1, 1};
+            in.params[i].bounds = {0, M_PI};
+        }
+
+        in.params[in.dim - 2].name = "theta";
+        in.params[in.dim - 2].closed = {1, 0};
+        in.params[in.dim - 2].bounds = {0, 2*M_PI};
+
+        in.params[in.dim - 1].name = "z";
+        in.params[in.dim - 1].closed = {1, 0};
+        in.params[in.dim - 1].bounds = {0, INFINITY};
+    } else if (in.space == 4.2) {
+        in.params[0].name = "r";
+        in.params[0].closed = {1, 0};
+        in.params[0].bounds = {0, INFINITY};
+
+        for (int i = 1; i < in.dim - 1; i++) {
+            in.params[i].name = "phi" + std::to_string(i);
+            in.params[i].closed = {1, 1};
+            in.params[i].bounds = {0, M_PI};
+        }
+
+        in.params[in.dim - 1].name = "theta";
+        in.params[in.dim - 1].closed = {1, 0};
+        in.params[in.dim - 1].bounds = {0, 2*M_PI};
+    }
 }
 
-Eigen::VectorXd point(double space, double dim, std::vector<double> constants) {
-    std::vector<double> vec;
-    while (!validVector(space, dim, constants, vec)) {
-        vec.clear();
+void setupPoints(struct Input &in) {
+    if (in.consts.size()) {
+        readConsts(in.consts);
+        while (!validValues(in.consts));
     }
 
-    // Eigen::VectorXd v = Eigen::Map<Eigen::VectorXd>(vec.data(), vec.size());
-    // std::cout << v << '\n';
-    
-    return Eigen::Map<Eigen::VectorXd>(vec.data(), vec.size());
+    for (int i = 0; i < 2; i++) {
+        std::cout << "Enter point " << i + 1 << " in the form ";
+        readParams(in.params);
+        while (!validValues(in.params));
+        in.points.push_back(readPoint(in.params));
+    }
 }

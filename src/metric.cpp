@@ -79,7 +79,7 @@ Eigen::Matrix3d torusSolid(struct Input in, Eigen::Vector3d vec) {
 
     double r = vec(0);
     double phi = vec(1);
-    double R = r + in.constants[0];
+    double R = r + in.consts[0].val;
 
     Eigen::Matrix3d mat;
     mat << 1, 0, 0, 
@@ -124,7 +124,7 @@ Eigen::MatrixXd hyperballSolid(Eigen::VectorXd vec) {
 
     diag(0) = 1;
     diag(1) = r*r;
-    
+
     for (int i = 1; i < d - 1; i++) {
         elem *= std::sin(vec(i)) * std::sin(vec(i));
         diag(i + 1) = elem;
@@ -137,6 +137,7 @@ Eigen::MatrixXd hyperballSolid(Eigen::VectorXd vec) {
 
 double polyPath(struct Input in) {
     int n;
+    
     std::cout << "Set precision (how many steps):\n";
     std::cin >> n;
 
