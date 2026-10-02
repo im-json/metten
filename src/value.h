@@ -30,3 +30,11 @@ bool validValues(std::vector<Value> &vec);
 void printPi(double val);
 
 bool inDomain(struct Value &val);
+
+void real(struct Value &v);
+
+void nonNeg(struct Value &v);
+
+void zenith(struct Value &v);
+
+void azimuth(struct Value &v);

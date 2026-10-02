@@ -79,85 +79,62 @@ void setupParams(struct Input &in) {
     if (in.space == 1.0) {
         for (int i = 0; i < in.dim; i++) {
             in.params[i].name = "x" + std::to_string(i + 1);
-            in.params[i].closed = {0, 0};
-            in.params[i].bounds = {-INFINITY, INFINITY};
+            real(in.params[i]);
         }
     } else if (in.space == 2.0) {
         in.params[0].name = "r";
-        in.params[0].closed = {1, 0};
-        in.params[0].bounds = {0, INFINITY};
-
         in.params[1].name = "theta";
-        in.params[1].closed = {1, 0};
-        in.params[1].bounds = {0, 2*M_PI};
+
+        nonNeg(in.params[0]);
+        azimuth(in.params[1]);
     } else if (in.space == 3.1) {
         in.params[0].name = "r";
-        in.params[0].closed = {1, 0};
-        in.params[0].bounds = {0, INFINITY};
-
         in.params[1].name = "theta";
-        in.params[1].closed = {1, 0};
-        in.params[1].bounds = {0, 2*M_PI};
-
         in.params[2].name = "z";
-        in.params[2].closed = {1, 0};
-        in.params[2].bounds = {0, INFINITY};
+
+        nonNeg(in.params[0]);
+        azimuth(in.params[1]);
+        nonNeg(in.params[2]);
     } else if (in.space == 3.2) {
         in.params[0].name = "r";
-        in.params[0].closed = {1, 0};
-        in.params[0].bounds = {0, INFINITY};
-
         in.params[1].name = "phi";
-        in.params[1].closed = {1, 1};
-        in.params[1].bounds = {0, M_PI};
-
         in.params[2].name = "theta";
-        in.params[2].closed = {1, 0};
-        in.params[2].bounds = {0, 2*M_PI};
+
+        nonNeg(in.params[0]);
+        zenith(in.params[1]);
+        azimuth(in.params[2]);
     } else if (in.space == 3.3) {
         in.params[0].name = "r";
-        in.params[0].closed = {1, 0};
-        in.params[0].bounds = {0, INFINITY};
-
         in.params[1].name = "phi";
-        in.params[1].closed = {1, 1};
-        in.params[1].bounds = {0, M_PI};
-
         in.params[2].name = "theta";
-        in.params[2].closed = {1, 0};
-        in.params[2].bounds = {0, 2*M_PI};
+
+        nonNeg(in.params[0]);
+        zenith(in.params[1]);
+        azimuth(in.params[2]);
     } else if (in.space == 4.1) {
         in.params[0].name = "r";
-        in.params[0].closed = {1, 0};
-        in.params[0].bounds = {0, INFINITY};
+        in.params[in.dim - 2].name = "theta";
+        in.params[in.dim - 1].name = "z";
+
+        nonNeg(in.params[0]);
+        azimuth(in.params[in.dim - 2]);
+        nonNeg(in.params[in.dim - 1]);
 
         for (int i = 1; i < in.dim - 2; i++) {
             in.params[i].name = "phi" + std::to_string(i);
-            in.params[i].closed = {1, 1};
-            in.params[i].bounds = {0, M_PI};
+            zenith(in.params[i]);
         }
-
-        in.params[in.dim - 2].name = "theta";
-        in.params[in.dim - 2].closed = {1, 0};
-        in.params[in.dim - 2].bounds = {0, 2*M_PI};
-
-        in.params[in.dim - 1].name = "z";
-        in.params[in.dim - 1].closed = {1, 0};
-        in.params[in.dim - 1].bounds = {0, INFINITY};
     } else if (in.space == 4.2) {
         in.params[0].name = "r";
-        in.params[0].closed = {1, 0};
-        in.params[0].bounds = {0, INFINITY};
+        in.params[in.dim - 1].name = "theta";
+
+        nonNeg(in.params[0]);
+        azimuth(in.params[in.dim - 1]);
 
         for (int i = 1; i < in.dim - 1; i++) {
             in.params[i].name = "phi" + std::to_string(i);
-            in.params[i].closed = {1, 1};
-            in.params[i].bounds = {0, M_PI};
+            zenith(in.params[i]);
         }
-
-        in.params[in.dim - 1].name = "theta";
-        in.params[in.dim - 1].closed = {1, 0};
-        in.params[in.dim - 1].bounds = {0, 2*M_PI};
     }
 }
 

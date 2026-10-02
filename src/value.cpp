@@ -99,8 +99,8 @@ bool validValues(std::vector<Value> &vals) {
 }
 
 void printPi(double val) {
-    if (std::floor(val / M_PI) == val / M_PI) {
-        if (val && val != M_PI) {
+    if (val && std::floor(val / M_PI) == val / M_PI) {
+        if (val != M_PI) {
             std::cout << val / M_PI << "*";
         }
         std::cout << "PI";
@@ -133,4 +133,24 @@ bool inDomain(struct Value &v) {
     }
 
     return true;
+}
+
+void real(struct Value &v) {
+    v.closed = {0, 0};
+    v.bounds = {-INFINITY, INFINITY};
+}
+
+void nonNeg(struct Value &v) {
+    v.closed = {1, 0};
+    v.bounds = {0, INFINITY};
+}
+
+void zenith(struct Value &v) {
+    v.closed = {1, 1};
+    v.bounds = {0, M_PI};
+}
+
+void azimuth(struct Value &v) {
+    v.closed = {1, 0};
+    v.bounds = {0, 2*M_PI};
 }
