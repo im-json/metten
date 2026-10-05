@@ -1,6 +1,6 @@
-#include "distance.h"
+#include "real.h"
 
-double distance(struct Input in) {
+double realDist(struct Input in) {
     if (!in.riemCurveSign) {
         return (cartComponent(in, 1) - cartComponent(in, 0)).norm();
     } else if (in.riemCurveSign == 1) {

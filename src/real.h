@@ -6,7 +6,7 @@
 
 #include "metric.h"
 
-double distance(struct Input in);
+double realDist(struct Input in);
 
 Eigen::VectorXd polarToCart(Eigen::VectorXd vec);
 

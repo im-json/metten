@@ -4,12 +4,12 @@
 #include "value.h"
 #include "input.h"
 #include "metric.h"
-#include "distance.h"
+#include "real.h"
 
 int main() {
     struct Input in = setup();
 
-    double exact = distance(in);
+    double exact = realDist(in);
 
     std::cout << "Exact distance: " << exact << std::endl;
 
