@@ -13,7 +13,8 @@ enum class Coords {
 };
 
 struct Input {
-    double space;
+    std::string space;
+    double region;
     double dim;
     int riemCurveSign;
     Coords coords;
@@ -25,6 +26,14 @@ struct Input {
 struct Input setup();
 
 void setupSpace(struct Input &in);
+
+void promptReal();
+
+void promptSphere();
+
+void promptTorus();
+
+void setupRegion(struct Input &in);
 
 void setupDim(struct Input &in);
 

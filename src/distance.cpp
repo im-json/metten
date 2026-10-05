@@ -48,13 +48,13 @@ Eigen::VectorXd ballToCart(Eigen::VectorXd vec) {
 }
 
 Eigen::VectorXd cartComponent(struct Input in, int num) {
-    if (in.space == 1.0) {
+    if (in.region == 1.0) {
         return in.points[num];
-    } else if (in.space == 2.0) {
+    } else if (in.region == 2.0) {
         return polarToCart(in.points[num]);
-    } else if (in.space == 3.1 || in.space == 4.1) {
+    } else if (in.region == 3.0 || in.region == 6.0) {
         return cylinderToCart(in.points[num]);
-    } else if (in.space == 3.2 || in.space == 4.2) {
+    } else if (in.region == 4.0 || in.region == 7.0) {
         return ballToCart(in.points[num]);
     }
 

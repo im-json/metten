@@ -1,17 +1,17 @@
 #include "metric.h"
 
 Eigen::MatrixXd metric(struct Input in, Eigen::VectorXd vec) {
-    if (in.space == 1.0) {
+    if (in.region == 1.0) {
         return cartesian(vec.size());
-    } else if (in.space == 2.0) {
+    } else if (in.region == 2.0) {
         return polar(vec);
-    } else if (in.space == 3.1) {
+    } else if (in.region == 3.0) {
         return cylinderSolid(vec);
-    } else if (in.space == 3.2) {
+    } else if (in.region == 4.0) {
         return ballSolid(vec);
-    } else if (in.space == 4.1) {
+    } else if (in.region == 6.0) {
         return hypercylinderSolid(vec);
-    } else if (in.space == 4.2) {
+    } else if (in.region == 7.0) {
         return hyperballSolid(vec);
     }
 

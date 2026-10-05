@@ -8,7 +8,7 @@ struct Input setup() {
     in.consts.resize(0);
 
     setupSpace(in);
-    setupDim(in);
+    setupRegion(in);
     setupCoords(in);
     setupConsts(in);
     setupParams(in);
@@ -18,63 +18,106 @@ struct Input setup() {
 }
 
 void setupSpace(struct Input &in) {
-    while (in.space < 1.0 || in.space > 4.2) {
-        std::cout << "Select a region:\n";
-        std::cout << "Type 1 for Cartesian in R^n\n";
-        std::cout << "Type 2 for Polar in R^2\n";
-        // std::cout << "Type 2.2 for 2-cylinder (hollow)\n";
-        // std::cout << "Type 2.3 for 2-sphere S^2 (hollow)\n";
-        // std::cout << "Type 2.4 for 2-torus T^2 (hollow)\n";
-        // std::cout << "Type 2.5 for 2-cone (hollow)\n";
-        std::cout << "Type 3.1 for Cylinder in R^3 (solid)\n";
-        std::cout << "Type 3.2 for Ball in R^3 (solid)\n";
-        std::cout << "Type 3.3 for Torus in R^3 (solid)\n";
-        // std::cout << "Type 3.4 for Cone in R^3 (solid)\n";
-        // std::cout << "Type 3.5 for n-sphere S^n (hollow)\n";
-        // std::cout << "Type 2.4 for n-torus T^n (hollow)\n";
-        std::cout << "Type 4.1 for Hypercylinder in R^n (solid)\n";
-        std::cout << "Type 4.2 for Hyperball in R^n (solid)\n";
-        std::cin >> in.space;
+    std::string spaces = "RST";
 
-        if (in.space < 1.0 || in.space > 4.2) {
+    std::string str = " ";
+
+    while (spaces.find(str) == std::string::npos || str.size() != 1) {
+        std::cout << "Select a space:\n";
+        std::cout << "Type 'R' for real\nType 'S' for sphere\n";
+        std::cout << "Type 'T' for torus\n";
+        std::cin >> str;
+        if (spaces.find(str) == std::string::npos || str.size() != 1) {
             std::cin.clear();
             std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-            std::cout << "Enter a valid number, dumbass.\n";
+            std::cout << "Enter a valid capital letter, dumbass. Try again:\n";
         }
     }
+
+    in.space = str;
+}
+
+void promptReal() {
+    std::cout << "Select a region:\n";
+    std::cout << "Type '1' for cartesian (R^n)\nType '2' for polar (R^2)\n";
+    std::cout << "Type '3' for solid cylinder (R^3)\nType '4' for solid ball (R^3)\n";
+    std::cout << "Type '4' for solid ball (R^3)\nType '5' for solid torus (R^3)\n";
+    std::cout << "Type '6' for solid hypercylinder (R^n)\n";
+    std::cout << "Type '7' for solid hyperball (R^n)\n";
+}
+
+void promptSphere() {
+    std::cout << "Select a region:\n";
+    std::cout << "Type '1' for sphere (S^2)\nType '2' for hypersphere (S^n)\n";
+}
+
+void promptTorus() {
+    std::cout << "Select a region:\n";
+    std::cout << "Type '1' for torus (T^2)\nType '2' for hypertorus (T^n)"; 
+}
+
+void setupRegion(struct Input &in) {
+    double region = 0.0, last = 0.0;
+
+    while (region < 1.0 || region > last || std::floor(region) != region) {
+        if (in.space == "R") {
+            promptReal();
+            last = 7.0;
+        } else if (in.space == "S") {
+            promptSphere();
+            last = 2.0;
+        } else if (in.space == "T") {
+            promptTorus();
+            last = 2.0;
+        }
+
+        std::cin >> region;
+
+        if (region < 1.0 || region > last || std::floor(region) != region) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Enter a valid number, dumbass. Try again:\n";
+        }
+    }
+
+    if ((in.space == "R" && region == 2.0) ||
+        ((in.space == "S" || in.space == "T") && region == 1.0)) {
+        in.dim = 2;
+    } else if (in.space == "R" && (region == 3.0 || region == 4.0 || region == 5.0)) {
+        in.dim = 3;
+    } else {
+        setupDim(in);
+    }
+
+    in.region = region;
 }
 
 void setupDim(struct Input &in) {
-    int minDim = static_cast<int>(std::floor(in.space));
+    double dim = 0.0;
 
-    if (in.space == 4.1 || in.space == 4.2) {
-        while (in.dim < minDim || std::floor(in.dim) != in.dim) {
-            std::cout << "Enter dimension:\n";
-            std::cin >> in.dim;
-
-            if (in.dim < minDim || std::floor(in.dim) != in.dim) {
-                std::cin.clear();
-                std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
-                std::cout << "Enter an integer >= " << minDim << ", dumbass. Try again:\n";
-            }
+    while (dim < 3.0 || std::floor(dim) != dim) {
+        std::cout << "Enter dimension:\n";
+        std::cin >> dim;
+        if (dim < 3.0 || std::floor(dim) != dim) {
+            std::cin.clear();
+            std::cin.ignore(std::numeric_limits<std::streamsize>::max(), '\n');
+            std::cout << "Enter an integer >= 3, dumbass. Try again:\n";
         }
-    } else {
-        in.dim = minDim;
     }
 
-    in.params.resize(minDim);
+    in.dim = static_cast<int>(dim);
 }
 
 void setupCoords(struct Input &in) {
-    if (in.space <= 1.0) {
+    if (in.space == "R" && in.region <= 1.0) {
         in.coords = Coords::Cartesian;
-    } else if (in.space > 1.0 && in.space <= 4.2) {
+    } else if (in.space == "R" && in.region > 1.0 && in.region <= 7.0) {
         in.coords = Coords::Spherical;
     } 
 }
 
 void setupConsts(struct Input &in) {
-    if (in.space == 3.3) {
+    if (in.region == 5.0) {
         in.consts.resize(1);
         positive(in.consts[0], "a");
     }
@@ -82,6 +125,7 @@ void setupConsts(struct Input &in) {
 
 void setupParams(struct Input &in) {
     in.riemCurveSign = 0;
+    in.params.resize(in.dim);
 
     if (in.coords == Coords::Cartesian) {
         for (int i = 0; i < in.dim; i++) {
@@ -91,24 +135,22 @@ void setupParams(struct Input &in) {
         nonNeg(in.params[0], "r");
     }
 
-    if (in.space == 2.0) {
+    if (in.region == 2.0) {
         azimuth(in.params[1], "theta");
-    } else if (in.space == 3.1) {
+    } else if (in.region == 3.0) {
         azimuth(in.params[1], "theta");
         nonNeg(in.params[2], "z");
-    } else if (in.space == 3.2 || in.space == 3.3) {
+    } else if (in.region == 4.0 || in.region == 5.0) {
         zenith(in.params[1], "phi");
         azimuth(in.params[2], "theta");
-    } else if (in.space == 4.1) {
+    } else if (in.region == 6.0) {
         azimuth(in.params[in.dim - 2], "theta");
         nonNeg(in.params[in.dim - 1], "z");
-
         for (int i = 1; i < in.dim - 2; i++) {
             zenith(in.params[i], "phi" + std::to_string(i));
         }
-    } else if (in.space == 4.2) {
+    } else if (in.region == 7.0) {
         azimuth(in.params[in.dim - 1], "theta");
-
         for (int i = 1; i < in.dim - 1; i++) {
             zenith(in.params[i], "phi" + std::to_string(i));
         }
