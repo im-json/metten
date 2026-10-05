@@ -9,6 +9,7 @@ struct Input setup() {
 
     setupSpace(in);
     setupDim(in);
+    setupCoords(in);
     setupConsts(in);
     setupParams(in);
     setupPoints(in);
@@ -64,76 +65,52 @@ void setupDim(struct Input &in) {
     in.params.resize(minDim);
 }
 
+void setupCoords(struct Input &in) {
+    if (in.space <= 1.0) {
+        in.coords = Coords::Cartesian;
+    } else if (in.space > 1.0 && in.space <= 4.2) {
+        in.coords = Coords::Spherical;
+    } 
+}
+
 void setupConsts(struct Input &in) {
     if (in.space == 3.3) {
         in.consts.resize(1);
-        in.consts[0].name = "a";
-        in.consts[0].closed = {0, 0};
-        in.consts[0].bounds = {0, INFINITY};
+        positive(in.consts[0], "a");
     }
 }
 
 void setupParams(struct Input &in) {
     in.riemCurveSign = 0;
 
-    if (in.space == 1.0) {
+    if (in.coords == Coords::Cartesian) {
         for (int i = 0; i < in.dim; i++) {
-            in.params[i].name = "x" + std::to_string(i + 1);
-            real(in.params[i]);
+            real(in.params[i], "x" + std::to_string(i + 1));
         }
-    } else if (in.space == 2.0) {
-        in.params[0].name = "r";
-        in.params[1].name = "theta";
+    } else if (in.coords == Coords::Spherical) {
+        nonNeg(in.params[0], "r");
+    }
 
-        nonNeg(in.params[0]);
-        azimuth(in.params[1]);
+    if (in.space == 2.0) {
+        azimuth(in.params[1], "theta");
     } else if (in.space == 3.1) {
-        in.params[0].name = "r";
-        in.params[1].name = "theta";
-        in.params[2].name = "z";
-
-        nonNeg(in.params[0]);
-        azimuth(in.params[1]);
-        nonNeg(in.params[2]);
-    } else if (in.space == 3.2) {
-        in.params[0].name = "r";
-        in.params[1].name = "phi";
-        in.params[2].name = "theta";
-
-        nonNeg(in.params[0]);
-        zenith(in.params[1]);
-        azimuth(in.params[2]);
-    } else if (in.space == 3.3) {
-        in.params[0].name = "r";
-        in.params[1].name = "phi";
-        in.params[2].name = "theta";
-
-        nonNeg(in.params[0]);
-        zenith(in.params[1]);
-        azimuth(in.params[2]);
+        azimuth(in.params[1], "theta");
+        nonNeg(in.params[2], "z");
+    } else if (in.space == 3.2 || in.space == 3.3) {
+        zenith(in.params[1], "phi");
+        azimuth(in.params[2], "theta");
     } else if (in.space == 4.1) {
-        in.params[0].name = "r";
-        in.params[in.dim - 2].name = "theta";
-        in.params[in.dim - 1].name = "z";
-
-        nonNeg(in.params[0]);
-        azimuth(in.params[in.dim - 2]);
-        nonNeg(in.params[in.dim - 1]);
+        azimuth(in.params[in.dim - 2], "theta");
+        nonNeg(in.params[in.dim - 1], "z");
 
         for (int i = 1; i < in.dim - 2; i++) {
-            in.params[i].name = "phi" + std::to_string(i);
-            zenith(in.params[i]);
+            zenith(in.params[i], "phi" + std::to_string(i));
         }
     } else if (in.space == 4.2) {
-        in.params[0].name = "r";
-        in.params[in.dim - 1].name = "theta";
-
-        nonNeg(in.params[0]);
-        azimuth(in.params[in.dim - 1]);
+        azimuth(in.params[in.dim - 1], "theta");
 
         for (int i = 1; i < in.dim - 1; i++) {
-            in.params[i].name = "phi" + std::to_string(i);
-            zenith(in.params[i]);
+            zenith(in.params[i], "phi" + std::to_string(i));
         }
     }
 }

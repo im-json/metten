@@ -135,22 +135,32 @@ bool inDomain(struct Value &v) {
     return true;
 }
 
-void real(struct Value &v) {
+void real(struct Value &v, std::string name) {
+    v.name = name;
     v.closed = {0, 0};
     v.bounds = {-INFINITY, INFINITY};
 }
 
-void nonNeg(struct Value &v) {
+void positive(struct Value &v, std::string name) {
+    v.name = name;
+    v.closed = {0, 0};
+    v.bounds = {0, INFINITY};
+}
+
+void nonNeg(struct Value &v, std::string name) {
+    v.name = name;
     v.closed = {1, 0};
     v.bounds = {0, INFINITY};
 }
 
-void zenith(struct Value &v) {
+void zenith(struct Value &v, std::string name) {
+    v.name = name;
     v.closed = {1, 1};
     v.bounds = {0, M_PI};
 }
 
-void azimuth(struct Value &v) {
+void azimuth(struct Value &v, std::string name) {
+    v.name = name;
     v.closed = {1, 0};
     v.bounds = {0, 2*M_PI};
 }

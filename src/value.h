@@ -31,10 +31,12 @@ void printPi(double val);
 
 bool inDomain(struct Value &val);
 
-void real(struct Value &v);
+void real(struct Value &v, std::string name);
 
-void nonNeg(struct Value &v);
+void positive(struct Value &v, std::string name);
 
-void zenith(struct Value &v);
+void nonNeg(struct Value &v, std::string name);
 
-void azimuth(struct Value &v);
+void zenith(struct Value &v, std::string name);
+
+void azimuth(struct Value &v, std::string name);
