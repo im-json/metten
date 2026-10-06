@@ -1,7 +1,13 @@
 #include "value.h"
 
 void readConsts(std::vector<Value> &consts) {
-    std::cout << "Enter constants in the form ";
+    std::cout << "Enter constant";
+
+    if (consts.size() >= 2) {
+        std::cout << "s in the form";
+    }
+
+    std::cout << " ";
 
     for (int i = 0; i < consts.size(); i++) {
         std::cout << consts[i].name;

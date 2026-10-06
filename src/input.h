@@ -9,7 +9,8 @@
 
 enum class Coords {
     Cartesian = 1,
-    Spherical = 2
+    Spherical = 2,
+    Toroidal = 3
 };
 
 struct Input {

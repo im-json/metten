@@ -9,9 +9,15 @@
 int main() {
     struct Input in = setup();
 
-    double exact = realDist(in);
+    double exact, approx;
 
-    std::cout << "Exact distance: " << exact << std::endl;
+    if (in.space == "R") {
+        exact = realDist(in);
+        std::cout << "Exact distance: " << exact << std::endl;
+    } else if (in.space == "S") {
+        approx = polyPath(in);
+        std::cout << "Approx distance: " << approx << std::endl;
+    }
 
     return 0;
 }

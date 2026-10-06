@@ -16,7 +16,11 @@ Eigen::MatrixXd metric(struct Input in, Eigen::VectorXd vec) {
             return solidHyperballReal(vec);
         }
     } else if (in.space == "S") {
-        return Eigen::MatrixXd();
+        if (in.region == 1.0) {
+            return sphere(in.consts[0].val, vec);
+        } else if (in.region == 2.0) {
+            return hypersphere(in.consts[0].val, vec);
+        }
     } else if (in.space == "T") {
         return Eigen::MatrixXd();
     }
@@ -117,7 +121,7 @@ Eigen::MatrixXd solidHyperballReal(Eigen::VectorXd vec) {
         std::cout << "Dimension must be >= 3, dumbass\n";
         return g;
     }
-    
+
     g(0,0) = 1;
     g.diagonal().tail(d - 1) = hypersphere(vec(0), vec.tail(d - 1)).diagonal();
 
@@ -126,7 +130,7 @@ Eigen::MatrixXd solidHyperballReal(Eigen::VectorXd vec) {
 
 double polyPath(struct Input in) {
     int n;
-    
+
     std::cout << "Set precision (how many steps):\n";
     std::cin >> n;
 
