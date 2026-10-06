@@ -5,21 +5,23 @@
 #include <cmath>
 
 #include "input.h"
+#include "sphere.h"
+#include "torus.h"
 
 Eigen::MatrixXd metric(struct Input in, Eigen::VectorXd vec);
 
-Eigen::MatrixXd cartesian(double dim);
+Eigen::MatrixXd cartesianReal(double dim);
 
-Eigen::Matrix2d polar(Eigen::Vector2d vec);
+Eigen::Matrix2d polarReal(Eigen::Vector2d vec);
 
-Eigen::Matrix3d cylinderSolid(Eigen::Vector3d vec);
+Eigen::Matrix3d solidCylinderReal(Eigen::Vector3d vec);
 
-Eigen::Matrix3d ballSolid(Eigen::Vector3d vec);
+Eigen::Matrix3d solidBallReal(Eigen::Vector3d vec);
 
-Eigen::Matrix3d torusSolid(struct Input in, Eigen::Vector3d vec);
+Eigen::Matrix3d solidTorusReal(double a, Eigen::Vector3d vec);
 
-Eigen::MatrixXd hypercylinderSolid(Eigen::VectorXd vec);
+Eigen::MatrixXd solidHypercylinderReal(Eigen::VectorXd vec);
 
-Eigen::MatrixXd hyperballSolid(Eigen::VectorXd vec);
+Eigen::MatrixXd solidHyperballReal(Eigen::VectorXd vec);
 
 double polyPath(struct Input in);

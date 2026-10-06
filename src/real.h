@@ -2,7 +2,6 @@
 
 #include <iostream>
 #include <Eigen/Dense>
-#include <cmath>
 
 #include "metric.h"
 

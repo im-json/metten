@@ -117,9 +117,12 @@ void setupCoords(struct Input &in) {
 }
 
 void setupConsts(struct Input &in) {
-    if (in.region == 5.0) {
+    if (in.space == "R" && in.region == 5.0) {
         in.consts.resize(1);
         positive(in.consts[0], "a");
+    } else if (in.space == "S" || in.space == "T") {
+        in.consts.resize(1);
+        positive(in.consts[0], "r");
     }
 }
 

@@ -1,138 +1,127 @@
 #include "metric.h"
 
 Eigen::MatrixXd metric(struct Input in, Eigen::VectorXd vec) {
-    if (in.region == 1.0) {
-        return cartesian(vec.size());
-    } else if (in.region == 2.0) {
-        return polar(vec);
-    } else if (in.region == 3.0) {
-        return cylinderSolid(vec);
-    } else if (in.region == 4.0) {
-        return ballSolid(vec);
-    } else if (in.region == 6.0) {
-        return hypercylinderSolid(vec);
-    } else if (in.region == 7.0) {
-        return hyperballSolid(vec);
+    if (in.space == "R") {
+        if (in.region == 1.0) {
+            return cartesianReal(vec.size());
+        } else if (in.region == 2.0) {
+            return polarReal(vec);
+        } else if (in.region == 3.0) {
+            return solidCylinderReal(vec);
+        } else if (in.region == 4.0) {
+            return solidBallReal(vec);
+        } else if (in.region == 6.0) {
+            return solidHypercylinderReal(vec);
+        } else if (in.region == 7.0) {
+            return solidHyperballReal(vec);
+        }
+    } else if (in.space == "S") {
+        return Eigen::MatrixXd();
+    } else if (in.space == "T") {
+        return Eigen::MatrixXd();
     }
 
     return Eigen::MatrixXd();
 }
 
-Eigen::MatrixXd cartesian(double dim){
-    if (dim < 1) {
-        std::cout << "Dimension must be >= 3, dumbass" << std::endl;
+Eigen::MatrixXd cartesianReal(double d){
+    if (d < 1) {
+        std::cout << "Dimension must be a positive integer, dumbass\n";
         return Eigen::MatrixXd();
     }
-    return Eigen::MatrixXd::Identity(dim, dim);
+    return Eigen::MatrixXd::Identity(d, d);
 }
 
-Eigen::Matrix2d polar(Eigen::Vector2d vec) {
+Eigen::Matrix2d polarReal(Eigen::Vector2d vec) {
+    Eigen::Matrix2d g = Eigen::Matrix2d::Zero();
+
     if (vec.size() != 2) {
-        std::cout << "Dimension != 2, dumbass" << std::endl;
-        return Eigen::Matrix2d();
+        std::cout << "Dimension != 2, dumbass.\n";
+        return g;
     }
 
     double r = vec(0);
 
-    Eigen::Matrix2d mat;
-    mat << 1, 0, 
-           0, r*r;
-    return mat;
+    g << 1, 0, 
+         0, r*r;
+    return g;
 }
 
-Eigen::Matrix3d cylinderSolid(Eigen::Vector3d vec) {
+Eigen::Matrix3d solidCylinderReal(Eigen::Vector3d vec) {
+    Eigen::Matrix3d g = Eigen::Matrix3d::Zero();
+
     if (vec.size() != 3) {
-        std::cout << "Dimension != 3, dumbass" << std::endl;
-        return Eigen::Matrix3d();
+        std::cout << "Dimension != 3, dumbass\n";
+        return g;
     }
 
     double r = vec(0);
 
-    Eigen::Matrix3d mat;
-    mat << 1, 0, 0, 
-           0, r*r, 0,
-           0, 0, 1;
-    return mat;
+    g << 1, 0, 0, 
+         0, r*r, 0,
+         0, 0, 1;
+         
+    return g;
 }
 
-Eigen::Matrix3d ballSolid(Eigen::Vector3d vec) {
+Eigen::Matrix3d solidBallReal(Eigen::Vector3d vec) {
+    Eigen::Matrix3d g = Eigen::Matrix3d::Zero();
+
     if (vec.size() != 3) {
-        std::cout << "Dimension != 3, dumbass" << std::endl;
-        return Eigen::Matrix3d();
+        std::cout << "Dimension != 3, dumbass\n";
+        return g;
     }
 
-    double r = vec(0);
-    double phi = vec(1);
+    g(0,0) = 1;
+    g.diagonal().tail(2) = sphere(vec(0), vec.tail(2)).diagonal();
 
-    Eigen::Matrix3d mat;
-    mat << 1, 0, 0, 
-           0, r*r, 0,
-           0, 0, r*r*std::sin(phi)*std::sin(phi);
-    return mat;
+    return g;
 }
 
-Eigen::Matrix3d torusSolid(struct Input in, Eigen::Vector3d vec) {
+Eigen::Matrix3d solidTorusReal(double a, Eigen::Vector3d vec) {
+    Eigen::Matrix3d g = Eigen::Matrix3d::Zero();
+
     if (vec.size() != 3) {
-        std::cout << "Dimension != 3, dumbass" << std::endl;
-        return Eigen::Matrix3d();
+        std::cout << "Dimension != 3, dumbass\n";
+        return g;
     }
 
-    double r = vec(0);
-    double phi = vec(1);
-    double R = r + in.consts[0].val;
+    g(0,0) = 1;
+    g.diagonal().tail(2) = torus(a, vec(0), vec.tail(2)).diagonal();
 
-    Eigen::Matrix3d mat;
-    mat << 1, 0, 0, 
-           0, r*r, 0,
-           0, 0, (R + r*std::cos(phi))*(R + r*std::cos(phi));
-    return mat;
+    return g;
 }
 
-Eigen::MatrixXd hypercylinderSolid(Eigen::VectorXd vec) {
+Eigen::MatrixXd solidHypercylinderReal(Eigen::VectorXd vec) {
     int d = vec.size();
+    Eigen::MatrixXd g = Eigen::MatrixXd::Zero(d,d);
 
-    if (d < 4) {
-        std::cout << "Dimension must be >= 4, dumbass" << std::endl;
-        return Eigen::MatrixXd();
+    if (d < 3) {
+        std::cout << "Dimension must be >= 3, dumbass\n";
+        return g;
     }
-
-    Eigen::MatrixXd mat = Eigen::MatrixXd::Zero(d, d);
-    Eigen::VectorXd diag = Eigen::VectorXd::Ones(d);
 
     double r = vec(0);
 
-    diag(1) = r*r;
+    g(1,1) = r*r;
+    g.diagonal() = Eigen::VectorXd::Ones(d);
 
-    mat.diagonal() += diag;
-
-    return mat;
+    return g;
 }
 
-Eigen::MatrixXd hyperballSolid(Eigen::VectorXd vec) {
+Eigen::MatrixXd solidHyperballReal(Eigen::VectorXd vec) {
     int d = vec.size();
+    Eigen::MatrixXd g = Eigen::MatrixXd::Zero(d,d);
 
-    if (d < 4) {
-        std::cout << "Dimension must be >= 4, dumbass" << std::endl;
-        return Eigen::MatrixXd();
+    if (d < 3) {
+        std::cout << "Dimension must be >= 3, dumbass\n";
+        return g;
     }
+    
+    g(0,0) = 1;
+    g.diagonal().tail(d - 1) = hypersphere(vec(0), vec.tail(d - 1)).diagonal();
 
-    Eigen::MatrixXd mat = Eigen::MatrixXd::Zero(d, d);
-    Eigen::VectorXd diag(d);
-
-    double r = vec(0);
-    double elem = r*r;
-
-    diag(0) = 1;
-    diag(1) = r*r;
-
-    for (int i = 1; i < d - 1; i++) {
-        elem *= std::sin(vec(i)) * std::sin(vec(i));
-        diag(i + 1) = elem;
-    }
-
-    mat.diagonal() += diag;
-
-    return mat;
+    return g;
 }
 
 double polyPath(struct Input in) {
